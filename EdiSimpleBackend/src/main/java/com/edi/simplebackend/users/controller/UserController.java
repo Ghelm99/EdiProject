@@ -44,6 +44,12 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
+	@GetMapping("/LoggedInUser")
+	public ResponseEntity<String> getUserLoggedIn() {
+
+		return ResponseEntity.ok(userService.getLoggedInUser());
+	}
+
 	@PostMapping
 	public ResponseEntity<User> addUser(@RequestBody final User user) {
 		return ResponseEntity.ok(this.userService.addUser(user));
@@ -59,6 +65,18 @@ public class UserController {
 		}
 
 		return ResponseEntity.ok(retreievedUser);
+	}
+
+	@PostMapping
+	public ResponseEntity<?> userLogin(@RequestParam String username, @RequestParam String password) {
+
+		return ResponseEntity.ok(userService.login(username, password));
+	}
+
+	@PostMapping
+	public void userLogout() {
+
+		userService.logout();
 	}
 
 }

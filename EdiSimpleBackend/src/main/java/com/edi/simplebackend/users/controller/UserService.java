@@ -20,6 +20,8 @@ class UserService {
 
 	private final UserRepository userRepository;
 
+	private String loggedInUser;
+
 	User addUser(final User user) {
 		this.userRepository.save(user.transferToUserData());
 		return getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
@@ -96,6 +98,22 @@ class UserService {
 		}
 
 		return outputUser;
+	}
+
+	User login(final String username, final String password) {
+
+		User user = getUserByUsernameAndPassword(username, password);
+
+		if (user != null) {
+			loggedInUser = username;
+		}
+
+		return user;
+	}
+
+	void logout() {
+
+		loggedInUser = "";
 	}
 
 }
