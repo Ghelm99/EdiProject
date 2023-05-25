@@ -1,7 +1,6 @@
 package com.edi.simplebackend.users.controller;
 
 import com.edi.simplebackend.users.exceptions.UserNotFoundException;
-import com.edi.simplebackend.users.exceptions.UsernameAlreadyTakenException;
 import com.edi.simplebackend.users.exceptions.WrongPasswordException;
 import com.edi.simplebackend.users.repository.UserRepository;
 import com.edi.simplebackend.users.model.User;
@@ -36,14 +35,14 @@ class UserService {
 	private User checkPassword(final String username, final String password) throws UserNotFoundException,
 			WrongPasswordException {
 
-		Optional<UserData> userDataOptional = this.userRepository.findByUsername(username);
+		final Optional<UserData> userDataOptional = this.userRepository.findByUsername(username);
 
 		if (userDataOptional.isEmpty()) {
 			throw new UserNotFoundException("The user corresponding to the username: " + username + " does not " +
 					"exist!");
 		}
 
-		User user = userDataOptional.get()
+		final User user = userDataOptional.get()
 				.transferToUser();
 
 		if (! (user.getPassword()
@@ -56,22 +55,22 @@ class UserService {
 
 	User getUserById(final Long userId) throws UserNotFoundException {
 
-		final Optional<UserData> retrievedUser = this.userRepository.findById(userId);
+		final Optional<UserData> userDataOptional = this.userRepository.findById(userId);
 
-		if (retrievedUser.isEmpty()) {
+		if (userDataOptional.isEmpty()) {
 			throw new UserNotFoundException("User not found for id: " + userId);
 		}
 
-		return retrievedUser.get()
+		return userDataOptional.get()
 				.transferToUser();
 	}
 
 	User getUserByUsername(final String username) throws UserNotFoundException {
 
-		Optional<UserData> userDataOptional = this.userRepository.findByUsername(username);
+		final Optional<UserData> userDataOptional = this.userRepository.findByUsername(username);
 
-		if (userDataOptional.isPresent()) {
-			throw new UsernameAlreadyTakenException("The username: " + username + " is already taken!");
+		if (userDataOptional.isEmpty()) {
+			throw new UserNotFoundException("User not found for username: " + username);
 		}
 
 		return userDataOptional.get()
@@ -109,22 +108,6 @@ class UserService {
 		}
 
 		return outputUser;
-	}
-
-	User login(final String username, final String password) {
-
-		User outputUser = getUserByUsernameAndPassword(username, password);
-
-		if (outputUser != null) {
-			loggedInUser = username;
-		}
-
-		return outputUser;
-	}
-
-	void logout() {
-
-		loggedInUser = "";
 	}
 
 }

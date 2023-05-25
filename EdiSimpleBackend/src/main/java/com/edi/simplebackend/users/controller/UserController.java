@@ -79,18 +79,6 @@ public class UserController {
 		return ResponseEntity.ok(userService.changeUserPassword(username, password, newPassword));
 	}
 
-	@PostMapping(params = {"username", "password"})
-	public ResponseEntity<?> userLogin(@RequestParam String username, @RequestParam String password) {
-
-		return ResponseEntity.ok(userService.login(username, password));
-	}
-
-	@PostMapping
-	public void userLogout() {
-
-		userService.logout();
-	}
-
 }
 
 
