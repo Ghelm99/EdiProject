@@ -5,9 +5,8 @@ import com.edi.simplebackend.books.repository.BookRepository;
 import com.edi.simplebackend.books.model.Book;
 import com.edi.simplebackend.books.model.BookData;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +15,11 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Component
 class BookService {
 
-	@Autowired
-	BookRepository bookRepository;
+	private final BookRepository bookRepository;
 
 	List<Book> getBooks(final Pageable pageable) {
 

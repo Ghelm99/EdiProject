@@ -1,15 +1,16 @@
 package com.edi.simplebackend.users.controller;
 
 import com.edi.simplebackend.users.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
-	@Autowired
-	private UserService userService;
+
+	private final UserService userService;
 
 	@GetMapping(params = "userId")
 	public ResponseEntity<User> getUserById(@RequestParam final Long userId) {

@@ -10,9 +10,8 @@ import com.edi.simplebackend.books.repository.BookRepository;
 import com.edi.simplebackend.loans.model.Loan;
 import com.edi.simplebackend.loans.model.LoanData;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -23,17 +22,15 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Component
 class LoanService {
 
-	@Autowired
-	LoanRepository loanRepository;
+	private final LoanRepository loanRepository;
 
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	BookRepository bookRepository;
+	private final UserRepository userRepository;
+
+	private final BookRepository bookRepository;
 
 	Loan addLoan(final Long userId, final long bookId) {
 

@@ -8,19 +8,17 @@ import com.edi.simplebackend.users.model.User;
 import com.edi.simplebackend.users.model.UserData;
 import java.util.Optional;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Component
 class UserService {
 
-	@Autowired
-	UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	User addUser(final User user) {
 		this.userRepository.save(user.transferToUserData());

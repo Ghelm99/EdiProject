@@ -1,7 +1,7 @@
 package com.edi.simplebackend.books.controller;
 
 import com.edi.simplebackend.books.model.Book;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -10,17 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
- * The books cannot be added, modified or deleted using the API.
- * The API has the following goals:
- * 		1. retrieve the entire list of books
- * 		2. query the books db by title, author and isbn
- */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/books")
 public class BookController {
-	@Autowired
-	private BookService bookService;
+
+	private final BookService bookService;
 
 	@GetMapping
 	public ResponseEntity<List<Book>> getAllBooks(

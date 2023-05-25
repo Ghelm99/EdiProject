@@ -1,7 +1,7 @@
 package com.edi.simplebackend.loans.controller;
 
 import com.edi.simplebackend.loans.model.Loan;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/loans")
 public class LoanController {
 
-	@Autowired
-	private LoanService loanService;
+	private final LoanService loanService;
 
 	@PostMapping(params = {"userId", "bookId"})
 	public ResponseEntity<Loan> addLoan(@RequestParam final Long userId,
