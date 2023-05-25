@@ -56,7 +56,7 @@ public class LoanController {
 		}
 	}
 
-	@GetMapping(params = "userEmail")
+	// @GetMapping(params = "userEmail")
 	public ResponseEntity<List<Loan>> getLoansByUserEmail(
 
 			@RequestParam final String userEmail,
