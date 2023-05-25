@@ -30,19 +30,19 @@ class LoanService {
 	private final UserRepository userRepository;
 	private final BookRepository bookRepository;
 
-	Loan addLoan(final String userEmail, final long bookId) {
+	Loan addLoan(final String email, final long bookId) {
 
 		Loan loanToBeAdded = new Loan();
 
 		Optional<BookData> bookDataOptional = bookRepository.findById(bookId);
-		Optional<UserData> userDataOptional = userRepository.findByEmail(userEmail);
+		Optional<UserData> userDataOptional = userRepository.findByEmail(email);
 
 		if (bookDataOptional.isEmpty()) {
 			throw new BookNotFoundException("The book: " + bookId + "does not exist!");
 		}
 
 		if (userDataOptional.isEmpty()) {
-			throw new UserNotFoundException("The user: " + userEmail + "does not exist!");
+			throw new UserNotFoundException("The user: " + email + "does not exist!");
 		}
 
 		loanToBeAdded.setBookId(bookDataOptional.get()
@@ -94,23 +94,23 @@ class LoanService {
 				.collect(Collectors.toList());
 	}
 
-	List<Loan> getLoansByUserEmail(final String userEmail, final Pageable pageable) {
+	List<Loan> getLoansByEmail(final String email, final Pageable pageable) {
 
-		return this.loanRepository.findByUserData_Email(userEmail, pageable)
+		return this.loanRepository.findByUserData_Email(email, pageable)
 				.stream()
 				.map(LoanData::transferToLoan)
 				.collect(Collectors.toList());
 	}
 
-	List<Loan> getLoansByUserEmail(final String userEmail) {
+	List<Loan> getLoansByEmail(final String email) {
 
-		return this.loanRepository.findByUserData_Email(userEmail)
+		return this.loanRepository.findByUserData_Email(email)
 				.stream()
 				.map(LoanData::transferToLoan)
 				.collect(Collectors.toList());
 	}
 
-	List<Object> getLoansByUserEmailWithBooks(final String email) {
+	List<Object> getLoansByEmailWithBooks(final String email) {
 
 		List<Object> output = new ArrayList<>();
 		List<Loan> loanList = this.loanRepository.findByUserData_Email(email)
@@ -134,7 +134,7 @@ class LoanService {
 		return output;
 	}
 
-	List<Object> getLoansByUserEmailWithBooks(final String email, Pageable pageable) {
+	List<Object> getLoansByEmailWithBooks(final String email, Pageable pageable) {
 
 		List<Object> output = new ArrayList<>();
 		List<Loan> loanList = this.loanRepository.findByUserData_Email(email, pageable)

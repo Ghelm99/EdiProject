@@ -17,30 +17,39 @@ public class UserSessionData {
 
 	private final UserRepository userRepository;
 	private Long userId;
-	private String userEmail;
+	private String email;
 	private String password;
 	private Boolean isUserLoggedIn;
 
-	public void login(String userEmail, String password) {
+	public void login(String email, String password) {
 
-		final Optional<UserData> optionalUserData = userRepository.findByEmail(userEmail);
+		final Optional<UserData> optionalUserData = userRepository.findByEmail(email);
 
 		if (optionalUserData.isPresent()) {
 			User user = optionalUserData.get()
 					.transferToUser();
 
-			this.userId = user.getUserId();
-			this.userEmail = user.getEmail();
-			this.password = user.getPassword();
-			isUserLoggedIn = true;
+			if (user.getPassword()
+					.equals(password)) {
 
+				this.userId = user.getUserId();
+				this.email = user.getEmail();
+				this.password = user.getPassword();
+				this.isUserLoggedIn = true;
+
+			} else {
+				this.userId = null;
+				this.email = "";
+				this.password = "";
+				this.isUserLoggedIn = false;
+			}
 		}
 	}
 
 	public void logout() {
 
 		userId = null;
-		userEmail = null;
+		email = null;
 		password = null;
 		isUserLoggedIn = false;
 	}

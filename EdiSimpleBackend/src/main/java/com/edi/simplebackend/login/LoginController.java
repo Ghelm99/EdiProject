@@ -18,23 +18,22 @@ public class LoginController {
 				.body(userSessionData);
 	}
 
-	@PostMapping(value = "/login", params = {"userId", "userEmail", "password"})
+	@PostMapping(value = "/login", params = {"email", "password"})
 	public ResponseEntity<?> login(
 
-			@RequestParam final String userId,
-			@RequestParam final String userEmail,
+			@RequestParam final String email,
 			@RequestParam final String password
 
 	) {
-		userSessionData.login(userEmail, password);
-		return ResponseEntity.ok("The user: " + userEmail + " has logged in!");
+		userSessionData.login(email, password);
+		return ResponseEntity.ok(userSessionData.getEmail());
 	}
 
 	@PostMapping(value = "/logout")
-	public ResponseEntity<String> logout() {
+	public ResponseEntity<?> logout() {
 
 		userSessionData.logout();
-		return ResponseEntity.ok("The user has logged out!");
+		return ResponseEntity.ok(userSessionData);
 	}
 
 }

@@ -36,7 +36,7 @@ class UserService {
 		final Optional<UserData> userDataOptional = this.userRepository.findByEmail(email);
 
 		if (userDataOptional.isEmpty()) {
-			throw new UserNotFoundException("The user corresponding to the username: " + email + " does not " +
+			throw new UserNotFoundException("The user corresponding to the email: " + email + " does not " +
 					"exist!");
 		}
 
@@ -51,9 +51,9 @@ class UserService {
 		return user;
 	}
 
-	User changeUserPassword(final String username, final String password, final String newPassword) {
+	User changeUserPassword(final String email, final String password, final String newPassword) {
 
-		User outputUser = getUserByEmailAndPassword(username, password);
+		User outputUser = getUserByEmailAndPassword(email, password);
 
 		if (outputUser != null) {
 			outputUser.setPassword(newPassword);
@@ -67,7 +67,7 @@ class UserService {
 		final Optional<UserData> userDataOptional = this.userRepository.findByEmail(email);
 
 		if (userDataOptional.isEmpty()) {
-			throw new UserNotFoundException("User not found for username: " + email);
+			throw new UserNotFoundException("User not found for email: " + email);
 		}
 
 		return userDataOptional.get()

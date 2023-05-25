@@ -29,7 +29,7 @@ public class UserController {
 		return ResponseEntity.ok(userService.changeUserPassword(email, password, newPassword));
 	}
 
-	@GetMapping(params = "username")
+	@GetMapping(params = "email")
 	public ResponseEntity<?> getUserByEmail(@RequestParam final String email) {
 		final User user;
 
