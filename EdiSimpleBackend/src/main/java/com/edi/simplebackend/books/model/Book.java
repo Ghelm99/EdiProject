@@ -1,10 +1,9 @@
 package com.edi.simplebackend.books.model;
 
+import java.util.ArrayList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
 
 @Getter
 @Setter

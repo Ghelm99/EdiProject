@@ -2,10 +2,10 @@ package com.edi.simplebackend.books.model;
 
 import com.edi.simplebackend.loans.model.LoanData;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,12 +17,15 @@ public class BookData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bookId;
+
 	private String title;
 	private String author;
 	private String isbn;
 	private String publisher;
+
 	@Column(name = "publication_date")
 	private String publicationDate;
+
 	@OneToMany(mappedBy = "bookData")
 	private List<LoanData> loanDataList;
 

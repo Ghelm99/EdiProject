@@ -1,17 +1,16 @@
 package com.edi.simplebackend.books.controller;
 
 import com.edi.simplebackend.books.exceptions.BookNotFoundException;
-import com.edi.simplebackend.books.repository.BookRepository;
 import com.edi.simplebackend.books.model.Book;
 import com.edi.simplebackend.books.model.BookData;
+import com.edi.simplebackend.books.repository.BookRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -20,6 +19,23 @@ import java.util.stream.Collectors;
 class BookService {
 
 	private final BookRepository bookRepository;
+
+	public Book addBook(Book book) {
+		bookRepository.save(book.transferToBookData());
+		return book;
+	}
+
+	Book getBookById(final Long id) {
+
+		if (this.bookRepository.findById(id)
+				.isEmpty()) {
+			throw new BookNotFoundException("The book with id: " + id + " does not exist!");
+		}
+
+		return this.bookRepository.findById(id)
+				.get()
+				.transferToBook();
+	}
 
 	List<Book> getBooks(final Pageable pageable) {
 
@@ -32,31 +48,6 @@ class BookService {
 	List<Book> getBooks() {
 
 		return this.bookRepository.findAll()
-				.stream()
-				.map(BookData::transferToBook)
-				.collect(Collectors.toList());
-	}
-
-	Book getBookById(final Long id) {
-
-		if (this.bookRepository.findById(id).isEmpty()) {
-			throw new BookNotFoundException("The book with id: " + id + " does not exist!");
-		}
-
-		return this.bookRepository.findById(id).get().transferToBook();
-	}
-
-	List<Book> getBooksByTitle(final String title, final Pageable pageable) {
-
-		return this.bookRepository.findByTitleContainingIgnoreCase(title, pageable)
-				.stream()
-				.map(BookData::transferToBook)
-				.collect(Collectors.toList());
-	}
-
-	List<Book> getBooksByTitle(final String title) {
-
-		return this.bookRepository.findByTitleContainingIgnoreCase(title)
 				.stream()
 				.map(BookData::transferToBook)
 				.collect(Collectors.toList());
@@ -110,9 +101,20 @@ class BookService {
 				.collect(Collectors.toList());
 	}
 
-	public Book addBook(Book book) {
-		bookRepository.save(book.transferToBookData());
-		return book;
+	List<Book> getBooksByTitle(final String title, final Pageable pageable) {
+
+		return this.bookRepository.findByTitleContainingIgnoreCase(title, pageable)
+				.stream()
+				.map(BookData::transferToBook)
+				.collect(Collectors.toList());
+	}
+
+	List<Book> getBooksByTitle(final String title) {
+
+		return this.bookRepository.findByTitleContainingIgnoreCase(title)
+				.stream()
+				.map(BookData::transferToBook)
+				.collect(Collectors.toList());
 	}
 
 }

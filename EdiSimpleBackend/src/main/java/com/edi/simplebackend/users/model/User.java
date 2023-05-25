@@ -14,10 +14,8 @@ public class User {
 	private Long userId;
 	private String name;
 	private String surname;
-	private String username;
-	private String password;
 	private String email;
-	private String telephoneNumber;
+	private String password;
 
 	public UserData transferToUserData() {
 
@@ -26,10 +24,8 @@ public class User {
 		userData.setUserId(this.userId);
 		userData.setName(this.name);
 		userData.setSurname(this.surname);
-		userData.setUsername(this.username);
-		userData.setPassword(this.password);
 		userData.setEmail(this.email);
-		userData.setTelephoneNumber(this.telephoneNumber);
+		userData.setPassword(this.password);
 
 		return userData;
 	}

@@ -12,47 +12,57 @@ public class UserController {
 
 	private final UserService userService;
 
-	@GetMapping(params = "userId")
-	public ResponseEntity<User> getUserById(@RequestParam final Long userId) {
-		return ResponseEntity.ok(this.userService.getUserById(userId));
-	}
-
-	@GetMapping(params = {"username", "password"})
-	public ResponseEntity<?> getUserByUsernameAndPassword(@RequestParam final String username,
-														  @RequestParam final String password) {
-		final User user;
-
-		try {
-			user = this.userService.getUserByUsernameAndPassword(username, password);
-		} catch (final Exception exception) {
-			return ResponseEntity.badRequest().body(exception.getMessage());
-		}
-
-		return ResponseEntity.ok(user);
-	}
-
-	@GetMapping(params = "username")
-	public ResponseEntity<?> getUserByUsername(@RequestParam final String username) {
-		final User user;
-
-		try {
-			user = this.userService.getUserByUsername(username);
-		} catch (final Exception exception) {
-			return ResponseEntity.badRequest().body(exception.getMessage());
-		}
-
-		return ResponseEntity.ok(user);
-	}
-
-	@GetMapping("/LoggedInUser")
-	public ResponseEntity<String> getUserLoggedIn() {
-
-		return ResponseEntity.ok(userService.getLoggedInUser());
-	}
-
 	@PostMapping
 	public ResponseEntity<User> addUser(@RequestBody final User user) {
 		return ResponseEntity.ok(this.userService.addUser(user));
+	}
+
+	@PutMapping(params = {"email", "password", "newPassword"})
+	public ResponseEntity<User> changeUserPassword(
+
+			@RequestParam String email,
+			@RequestParam String password,
+			@RequestParam String newPassword
+
+	) {
+
+		return ResponseEntity.ok(userService.changeUserPassword(email, password, newPassword));
+	}
+
+	@GetMapping(params = "username")
+	public ResponseEntity<?> getUserByEmail(@RequestParam final String email) {
+		final User user;
+
+		try {
+			user = this.userService.getUserByEmail(email);
+		} catch (final Exception exception) {
+			return ResponseEntity.badRequest()
+					.body(exception.getMessage());
+		}
+
+		return ResponseEntity.ok(user);
+	}
+
+	@GetMapping(params = {"email", "password"})
+	public ResponseEntity<?> getUserByEmailAndPassword(
+			@RequestParam final String email,
+			@RequestParam final String password
+	) {
+		final User user;
+
+		try {
+			user = this.userService.getUserByEmailAndPassword(email, password);
+		} catch (final Exception exception) {
+			return ResponseEntity.badRequest()
+					.body(exception.getMessage());
+		}
+
+		return ResponseEntity.ok(user);
+	}
+
+	@GetMapping(params = "userId")
+	public ResponseEntity<User> getUserById(@RequestParam final Long userId) {
+		return ResponseEntity.ok(this.userService.getUserById(userId));
 	}
 
 	@PutMapping(params = "id")
@@ -61,22 +71,11 @@ public class UserController {
 		final User retreievedUser = this.userService.updateUser(id, user);
 
 		if (retreievedUser == null) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.notFound()
+					.build();
 		}
 
 		return ResponseEntity.ok(retreievedUser);
-	}
-
-	@PutMapping(params = {"username", "password", "newPassword"})
-	public ResponseEntity<User> changeUserPassword(
-
-			@RequestParam String username,
-			@RequestParam String password,
-			@RequestParam String newPassword
-
-	) {
-
-		return ResponseEntity.ok(userService.changeUserPassword(username, password, newPassword));
 	}
 
 }

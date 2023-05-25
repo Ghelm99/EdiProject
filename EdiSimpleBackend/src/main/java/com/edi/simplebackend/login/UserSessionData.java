@@ -13,7 +13,7 @@ public class UserSessionData {
 
 	private String userId;
 
-	private String username;
+	private String userEmail;
 
 	private String password;
 
@@ -22,7 +22,7 @@ public class UserSessionData {
 	public void login(String userId, String username, String password) {
 
 		this.userId = userId;
-		this.username = username;
+		this.userEmail = username;
 		this.password = password;
 		isUserLoggedIn = true;
 	}
@@ -30,7 +30,7 @@ public class UserSessionData {
 	public void logout() {
 
 		userId = null;
-		username = null;
+		userEmail = null;
 		password = null;
 		isUserLoggedIn = false;
 	}

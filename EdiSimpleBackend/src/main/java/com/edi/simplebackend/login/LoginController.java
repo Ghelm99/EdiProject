@@ -11,16 +11,23 @@ public class LoginController {
 
 	private final UserSessionData userSessionData;
 
-	@PostMapping(value = "/login", params = {"userId", "username", "password"})
+	@GetMapping
+	public ResponseEntity<UserSessionData> getUserSessionData() {
+
+		return ResponseEntity.ok()
+				.body(userSessionData);
+	}
+
+	@PostMapping(value = "/login", params = {"userId", "userEmail", "password"})
 	public ResponseEntity<?> login(
 
 			@RequestParam final String userId,
-			@RequestParam final String username,
+			@RequestParam final String userEmail,
 			@RequestParam final String password
 
 	) {
-		userSessionData.login(userId, username, password);
-		return ResponseEntity.ok("The user: " + username + " has logged in!");
+		userSessionData.login(userId, userEmail, password);
+		return ResponseEntity.ok("The user: " + userEmail + " has logged in!");
 	}
 
 	@PostMapping(value = "/logout")
@@ -28,12 +35,6 @@ public class LoginController {
 
 		userSessionData.logout();
 		return ResponseEntity.ok("The user has logged out!");
-	}
-
-	@GetMapping
-	public ResponseEntity<UserSessionData> getUserSessionData() {
-
-		return ResponseEntity.ok().body(userSessionData);
 	}
 
 }

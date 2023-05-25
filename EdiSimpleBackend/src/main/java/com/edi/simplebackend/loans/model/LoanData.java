@@ -1,7 +1,7 @@
 package com.edi.simplebackend.loans.model;
 
-import com.edi.simplebackend.users.model.UserData;
 import com.edi.simplebackend.books.model.BookData;
+import com.edi.simplebackend.users.model.UserData;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +17,15 @@ public class LoanData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long loanId;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private UserData userData;
+
 	@ManyToOne
 	@JoinColumn(name = "book_id")
 	private BookData bookData;
+
 	private String startingDate;
 	private String returnDate;
 

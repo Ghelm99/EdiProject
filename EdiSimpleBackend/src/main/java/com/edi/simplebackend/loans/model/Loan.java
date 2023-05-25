@@ -1,7 +1,7 @@
 package com.edi.simplebackend.loans.model;
 
-import com.edi.simplebackend.users.model.User;
 import com.edi.simplebackend.books.model.Book;
+import com.edi.simplebackend.users.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
