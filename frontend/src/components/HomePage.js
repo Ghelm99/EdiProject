@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Container } from "react-bootstrap";
 
-const HomePage = ({ handleNavigate, accessToken, refreshToken }) => {
+const HomePage = ({ handleNavigate, userEmail }) => {
 	return (
 		<Container className="text-center">
 			<Col className="col-md-4 offset-md-4 text-center">
@@ -13,7 +13,7 @@ const HomePage = ({ handleNavigate, accessToken, refreshToken }) => {
 						user-friendly platform where you can explore a vast collection of
 						books and discover your next great read.
 					</p>
-					{accessToken && refreshToken ? (
+					{userEmail ? (
 						<Button
 							variant="primary"
 							onClick={() => handleNavigate("/catalogue")}>

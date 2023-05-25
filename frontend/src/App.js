@@ -9,14 +9,10 @@ import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import Topbar from "./components/Topbar";
-import useAccessToken from "./components/UseAccessToken";
-import useRefreshToken from "./components/UseRefreshToken";
 import useUserEmail from "./components/UseUserEmail";
 import "./css/main.min.css";
 
 const App = () => {
-	const { accessToken, setAccessToken } = useAccessToken();
-	const { refreshToken, setRefreshToken } = useRefreshToken();
 	const navigate = useNavigate();
 	const { userEmail, setUserEmail } = useUserEmail();
 
@@ -25,19 +21,13 @@ const App = () => {
 	}
 
 	useEffect(() => {
-		console.log("access_token: " + localStorage.getItem("access_token"));
-		console.log("refresh_token: " + localStorage.getItem("refresh_token"));
 		console.log("user_email: " + localStorage.getItem("user_email"));
-	}, [accessToken, refreshToken, userEmail]);
+	}, [userEmail]);
 
 	return (
 		<div className="App">
 			<Topbar
-				accessToken={accessToken}
-				refreshToken={refreshToken}
 				userEmail={userEmail}
-				setAccessToken={setAccessToken}
-				setRefreshToken={setRefreshToken}
 				setUserEmail={setUserEmail}
 				handleNavigate={handleNavigate}
 			/>
@@ -46,11 +36,7 @@ const App = () => {
 					<Route
 						path="/"
 						element={
-							<HomePage
-								handleNavigate={handleNavigate}
-								accessToken={accessToken}
-								refreshToken={refreshToken}
-							/>
+							<HomePage handleNavigate={handleNavigate} userEmail={userEmail} />
 						}></Route>
 					<Route path="/catalogue" element={<BooksPage />}></Route>
 					<Route path="/contacts" element={<ContactPage />}></Route>
@@ -64,8 +50,6 @@ const App = () => {
 						path="/login"
 						element={
 							<LoginPage
-								setAccessToken={setAccessToken}
-								setRefreshToken={setRefreshToken}
 								setUserEmail={setUserEmail}
 								handleNavigate={handleNavigate}
 							/>

@@ -20,9 +20,6 @@ const CreateLoanPage = () => {
 	useEffect(() => {
 		fetch("/books", {
 			method: "GET",
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-			},
 		})
 			.then((response) => response.json())
 			.then((data) => setAllBooks(data))
@@ -32,9 +29,6 @@ const CreateLoanPage = () => {
 	useEffect(() => {
 		fetch(queryUrl, {
 			method: "GET",
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-			},
 		})
 			.then((response) => response.json())
 			.then((data) => setPageBooks(data))
@@ -81,9 +75,6 @@ const CreateLoanPage = () => {
 				`http://localhost:8080/loans?userEmail=${userEmail}&bookId=${bookId}`,
 				{
 					method: "POST",
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-					},
 				}
 			);
 

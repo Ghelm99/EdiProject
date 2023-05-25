@@ -17,9 +17,6 @@ const ActiveLoansPage = () => {
 				`/loans?userEmail=${localStorage.getItem("user_email")}`,
 				{
 					method: "GET",
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-					},
 				}
 			);
 			const data = await response.json();
@@ -37,9 +34,6 @@ const ActiveLoansPage = () => {
 		try {
 			await fetch(`/loans?loanId=${loanId}`, {
 				method: "DELETE",
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-				},
 			});
 			await fetchLoansData();
 		} catch (error) {

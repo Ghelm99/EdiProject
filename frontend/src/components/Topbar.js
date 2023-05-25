@@ -2,19 +2,9 @@ import { useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Topbar = ({
-	accessToken,
-	refreshToken,
-	userEmail,
-	setAccessToken,
-	setRefreshToken,
-	setUserEmail,
-	handleNavigate,
-}) => {
+const Topbar = ({ userEmail, setUserEmail, handleNavigate }) => {
 	const handleLogout = () => {
 		handleNavigate("/");
-		setAccessToken("");
-		setRefreshToken("");
 		setUserEmail("");
 	};
 
@@ -33,7 +23,7 @@ const Topbar = ({
 					/>
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
-							{accessToken && refreshToken && (
+							{userEmail && (
 								<>
 									<Nav.Link as={Link} to="/catalogue">
 										Book catalog
@@ -50,7 +40,7 @@ const Topbar = ({
 								Contacts
 							</Nav.Link>
 						</Nav>
-						{accessToken && refreshToken ? (
+						{userEmail ? (
 							<Nav className="ms-auto">
 								<Nav.Item className="d-flex align-items-center">
 									<Nav.Link as={Link} to="/" className="me-3">

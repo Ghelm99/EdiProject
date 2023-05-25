@@ -2,49 +2,39 @@ import React, { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 async function loginUser(credentials) {
-	const response = await fetch("http://localhost:8080/auth/login", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(credentials),
-	});
+	const response = await fetch(
+		`http://localhost:8080/userAccess/login?userEmail=${credentials.emailInput}&password=${credentials.passwordInput}`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	);
 
-	const data = await response.json();
-
-	if (data.error && data.error === "Bad credentials") {
-		throw new Error("Wrong credentials!");
-	}
+	const responseBody = await response.text();
 
 	return {
-		accessToken: data.access_token,
-		refreshToken: data.refresh_token,
+		userEmail: responseBody,
 	};
 }
 
-const LoginPage = ({
-	setAccessToken,
-	setRefreshToken,
-	setUserEmail,
-	handleNavigate,
-}) => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+const LoginPage = ({ setUserEmail, handleNavigate }) => {
+	const [emailInput, setEmailInput] = useState("");
+	const [passwordInput, setPasswordInput] = useState("");
 	const [error, setError] = useState("");
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			if (email === "" || password === "") {
+			if (emailInput === "" || passwordInput === "") {
 				setError("Please, complete the form.");
 			} else {
-				const { accessToken, refreshToken } = await loginUser({
-					email,
-					password,
+				const { userEmail } = await loginUser({
+					emailInput,
+					passwordInput,
 				});
-				setAccessToken(accessToken);
-				setRefreshToken(refreshToken);
-				setUserEmail(email);
+				setUserEmail(userEmail);
 				handleNavigate("/");
 			}
 		} catch (error) {
@@ -62,9 +52,9 @@ const LoginPage = ({
 							<Form.Control
 								type="email"
 								placeholder="Email"
-								value={email}
+								value={emailInput}
 								onSelect={() => setError("")}
-								onChange={(e) => setEmail(e.target.value)}
+								onChange={(e) => setEmailInput(e.target.value)}
 								className="mb-3"
 							/>
 						</Form.Group>
@@ -73,9 +63,9 @@ const LoginPage = ({
 							<Form.Control
 								type="password"
 								placeholder="Password"
-								value={password}
+								value={passwordInput}
 								onSelect={() => setError("")}
-								onChange={(e) => setPassword(e.target.value)}
+								onChange={(e) => setPasswordInput(e.target.value)}
 								className="mb-3"
 							/>
 						</Form.Group>

@@ -16,9 +16,6 @@ const BooksPage = () => {
 	useEffect(() => {
 		fetch("/books", {
 			method: "GET",
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-			},
 		})
 			.then((response) => response.json())
 			.then((data) => setAllBooks(data))
@@ -28,9 +25,6 @@ const BooksPage = () => {
 	useEffect(() => {
 		fetch(queryUrl, {
 			method: "GET",
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-			},
 		})
 			.then((response) => response.json())
 			.then((data) => setPageBooks(data))
