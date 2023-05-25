@@ -26,7 +26,7 @@ public class LoginController {
 			@RequestParam final String password
 
 	) {
-		userSessionData.login(userId, userEmail, password);
+		userSessionData.login(userEmail, password);
 		return ResponseEntity.ok("The user: " + userEmail + " has logged in!");
 	}
 
