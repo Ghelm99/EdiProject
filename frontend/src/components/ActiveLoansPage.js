@@ -14,7 +14,7 @@ const ActiveLoansPage = () => {
 	const fetchLoansData = async () => {
 		try {
 			const response = await fetch(
-				`/loans?userEmail=${localStorage.getItem("user_email")}`,
+				`/loans?email=${localStorage.getItem("email")}`,
 				{
 					method: "GET",
 				}

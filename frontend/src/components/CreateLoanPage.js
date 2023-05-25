@@ -68,11 +68,11 @@ const CreateLoanPage = () => {
 	};
 
 	const handleCreateLoan = async (bookId) => {
-		const userEmail = localStorage.getItem("user_email");
+		const email = localStorage.getItem("email");
 
 		try {
 			const response = await fetch(
-				`http://localhost:8080/loans?userEmail=${userEmail}&bookId=${bookId}`,
+				`http://localhost:8080/loans?email=${email}&bookId=${bookId}`,
 				{
 					method: "POST",
 				}

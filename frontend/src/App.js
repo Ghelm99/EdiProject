@@ -14,21 +14,21 @@ import "./css/main.min.css";
 
 const App = () => {
 	const navigate = useNavigate();
-	const { userEmail, setUserEmail } = useUserEmail();
+	const { email, setEmail } = useUserEmail();
 
 	function handleNavigate(path) {
 		navigate(path);
 	}
 
 	useEffect(() => {
-		console.log("user_email: " + localStorage.getItem("user_email"));
-	}, [userEmail]);
+		console.log("email: " + localStorage.getItem("email"));
+	}, [email]);
 
 	return (
 		<div className="App">
 			<Topbar
-				userEmail={userEmail}
-				setUserEmail={setUserEmail}
+				email={email}
+				setUserEmail={email}
 				handleNavigate={handleNavigate}
 			/>
 			<div style={{ marginTop: "4rem", marginBottom: "4rem" }}>
@@ -36,9 +36,9 @@ const App = () => {
 					<Route
 						path="/"
 						element={
-							<HomePage handleNavigate={handleNavigate} userEmail={userEmail} />
+							<HomePage handleNavigate={handleNavigate} email={email} />
 						}></Route>
-					<Route path="/catalogue" element={<BooksPage />}></Route>
+					<Route path="/catalog" element={<BooksPage />}></Route>
 					<Route path="/contacts" element={<ContactPage />}></Route>
 					<Route path="/loans" element={<LoansPage />}></Route>
 					<Route
@@ -50,7 +50,7 @@ const App = () => {
 						path="/login"
 						element={
 							<LoginPage
-								setUserEmail={setUserEmail}
+								setUserEmail={setEmail}
 								handleNavigate={handleNavigate}
 							/>
 						}></Route>

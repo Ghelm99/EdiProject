@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Topbar = ({ userEmail, setUserEmail, handleNavigate }) => {
+const Topbar = ({ email, setEmail, handleNavigate }) => {
 	const handleLogout = () => {
 		handleNavigate("/");
-		setUserEmail("");
+		setEmail("");
 	};
 
 	const [expanded, setExpanded] = useState(false);
@@ -23,9 +23,9 @@ const Topbar = ({ userEmail, setUserEmail, handleNavigate }) => {
 					/>
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
-							{userEmail && (
+							{email && (
 								<>
-									<Nav.Link as={Link} to="/catalogue">
+									<Nav.Link as={Link} to="/catalog">
 										Book catalog
 									</Nav.Link>
 									<Nav.Link as={Link} to="/createLoan">
@@ -40,14 +40,14 @@ const Topbar = ({ userEmail, setUserEmail, handleNavigate }) => {
 								Contacts
 							</Nav.Link>
 						</Nav>
-						{userEmail ? (
+						{email ? (
 							<Nav className="ms-auto">
 								<Nav.Item className="d-flex align-items-center">
 									<Nav.Link as={Link} to="/" className="me-3">
 										<i
 											className="bi bi-person-circle me-2"
 											style={{ fontSize: "1.5rem" }}></i>{" "}
-										{userEmail}
+										{email}
 									</Nav.Link>
 									<Button variant="danger" onClick={handleLogout}>
 										Log out

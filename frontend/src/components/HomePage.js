@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Container } from "react-bootstrap";
 
-const HomePage = ({ handleNavigate, userEmail }) => {
+const HomePage = ({ handleNavigate, email }) => {
 	return (
 		<Container className="text-center">
 			<Col className="col-md-4 offset-md-4 text-center">
@@ -13,10 +13,10 @@ const HomePage = ({ handleNavigate, userEmail }) => {
 						user-friendly platform where you can explore a vast collection of
 						books and discover your next great read.
 					</p>
-					{userEmail ? (
+					{email ? (
 						<Button
 							variant="primary"
-							onClick={() => handleNavigate("/catalogue")}>
+							onClick={() => handleNavigate("/catalog")}>
 							Search for books
 						</Button>
 					) : (

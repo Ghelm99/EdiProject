@@ -3,7 +3,7 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 async function loginUser(credentials) {
 	const response = await fetch(
-		`http://localhost:8080/userAccess/login?userEmail=${credentials.emailInput}&password=${credentials.passwordInput}`,
+		`http://localhost:8080/userAccess/login?email=${credentials.emailInput}&password=${credentials.passwordInput}`,
 		{
 			method: "POST",
 			headers: {
@@ -15,7 +15,7 @@ async function loginUser(credentials) {
 	const responseBody = await response.text();
 
 	return {
-		userEmail: responseBody,
+		email: responseBody,
 	};
 }
 
@@ -30,11 +30,11 @@ const LoginPage = ({ setUserEmail, handleNavigate }) => {
 			if (emailInput === "" || passwordInput === "") {
 				setError("Please, complete the form.");
 			} else {
-				const { userEmail } = await loginUser({
+				const { email } = await loginUser({
 					emailInput,
 					passwordInput,
 				});
-				setUserEmail(userEmail);
+				setUserEmail(email);
 				handleNavigate("/");
 			}
 		} catch (error) {
