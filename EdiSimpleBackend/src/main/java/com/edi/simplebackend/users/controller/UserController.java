@@ -67,7 +67,19 @@ public class UserController {
 		return ResponseEntity.ok(retreievedUser);
 	}
 
-	@PostMapping
+	@PutMapping(params = {"username", "password", "newPassword"})
+	public ResponseEntity<User> changeUserPassword(
+
+			@RequestParam String username,
+			@RequestParam String password,
+			@RequestParam String newPassword
+
+	) {
+
+		return ResponseEntity.ok(userService.changeUserPassword(username, password, newPassword));
+	}
+
+	@PostMapping(params = {"username", "password"})
 	public ResponseEntity<?> userLogin(@RequestParam String username, @RequestParam String password) {
 
 		return ResponseEntity.ok(userService.login(username, password));

@@ -100,15 +100,26 @@ class UserService {
 		return outputUser;
 	}
 
+	User changeUserPassword(final String username, final String password, final String newPassword) {
+
+		User outputUser = getUserByUsernameAndPassword(username, password);
+
+		if (outputUser != null) {
+			outputUser.setPassword(newPassword);
+		}
+
+		return outputUser;
+	}
+
 	User login(final String username, final String password) {
 
-		User user = getUserByUsernameAndPassword(username, password);
+		User outputUser = getUserByUsernameAndPassword(username, password);
 
-		if (user != null) {
+		if (outputUser != null) {
 			loggedInUser = username;
 		}
 
-		return user;
+		return outputUser;
 	}
 
 	void logout() {
