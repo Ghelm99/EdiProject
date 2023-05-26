@@ -28,7 +28,7 @@ const App = () => {
 		<div className="App">
 			<Topbar
 				email={email}
-				setUserEmail={email}
+				setEmail={setEmail}
 				handleNavigate={handleNavigate}
 			/>
 			<div style={{ marginTop: "4rem", marginBottom: "4rem" }}>
