@@ -24,9 +24,11 @@ async function signupUser(credentials) {
 }
 
 const SignupPage = ({ handleNavigate }) => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
+	const [nameInput, setNameInput] = useState("");
+	const [surnameInput, setSurnameInput] = useState("");
+	const [emailInput, setEmailInput] = useState("");
+	const [passwordInput, setPasswordInput] = useState("");
+	const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [signupError, setSignupError] = useState("");
 	const [success, setSuccess] = useState("");
@@ -35,18 +37,28 @@ const SignupPage = ({ handleNavigate }) => {
 		e.preventDefault();
 
 		try {
-			if (!(password === confirmPassword)) {
+			if (!(passwordInput === confirmPasswordInput)) {
 				setPasswordError("The two password don't match!");
-			} else if (email === "" || password === "" || confirmPassword === "") {
+			} else if (
+				emailInput === "" ||
+				passwordInput === "" ||
+				confirmPasswordInput === ""
+			) {
 				setSignupError("Please, complete the form.");
 			} else {
-				signupUser({ email, password });
+				const userData = {
+					name: nameInput,
+					surname: surnameInput,
+					email: emailInput,
+					password: passwordInput,
+				};
+				signupUser(userData);
 				setSuccess("Sign up successful!");
 			}
 		} catch (error) {
 			setSignupError(error.message);
-			setEmail("");
-			setPassword("");
+			setEmailInput("");
+			setPasswordInput("");
 		}
 	};
 
@@ -56,17 +68,43 @@ const SignupPage = ({ handleNavigate }) => {
 				<Col className="col-md-4 offset-md-4 text-center">
 					<h1>Please, sign up!</h1>
 					<Form onSubmit={handleSubmit}>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicName">
 							<Form.Control
-								type="email"
 								placeholder="Email"
-								value={email}
+								value={nameInput}
 								onSelect={() => {
 									setPasswordError("");
 									setSignupError("");
 									setSuccess("");
 								}}
-								onChange={(e) => setEmail(e.target.value)}
+								onChange={(e) => setNameInput(e.target.value)}
+								className="mb-3"
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicSurname">
+							<Form.Control
+								placeholder="Surname"
+								value={surnameInput}
+								onSelect={() => {
+									setPasswordError("");
+									setSignupError("");
+									setSuccess("");
+								}}
+								onChange={(e) => setSurnameInput(e.target.value)}
+								className="mb-3"
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicEmail">
+							<Form.Control
+								type="email"
+								placeholder="Email"
+								value={emailInput}
+								onSelect={() => {
+									setPasswordError("");
+									setSignupError("");
+									setSuccess("");
+								}}
+								onChange={(e) => setEmailInput(e.target.value)}
 								className="mb-3"
 							/>
 						</Form.Group>
@@ -75,13 +113,13 @@ const SignupPage = ({ handleNavigate }) => {
 							<Form.Control
 								type="password"
 								placeholder="Password"
-								value={password}
+								value={passwordInput}
 								onSelect={() => {
 									setPasswordError("");
 									setSignupError("");
 									setSuccess("");
 								}}
-								onChange={(e) => setPassword(e.target.value)}
+								onChange={(e) => setPasswordInput(e.target.value)}
 								className="mb-3"
 							/>
 						</Form.Group>
@@ -90,13 +128,13 @@ const SignupPage = ({ handleNavigate }) => {
 							<Form.Control
 								type="password"
 								placeholder="Confirm Password"
-								value={confirmPassword}
+								value={confirmPasswordInput}
 								onSelect={() => {
 									setPasswordError("");
 									setSignupError("");
 									setSuccess("");
 								}}
-								onChange={(e) => setConfirmPassword(e.target.value)}
+								onChange={(e) => setConfirmPasswordInput(e.target.value)}
 								className="mb-3"
 							/>
 						</Form.Group>

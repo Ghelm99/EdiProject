@@ -25,26 +25,26 @@ async function loginUser(credentials) {
 const LoginPage = ({
 	setAccessToken,
 	setRefreshToken,
-	setUserEmail,
+	setEmail,
 	handleNavigate,
 }) => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [emailInput, setEmailInput] = useState("");
+	const [passwordInput, setPasswordInput] = useState("");
 	const [error, setError] = useState("");
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			if (email === "" || password === "") {
+			if (emailInput === "" || passwordInput === "") {
 				setError("Please, complete the form.");
 			} else {
 				const { accessToken, refreshToken } = await loginUser({
-					email,
-					password,
+					emailInput,
+					passwordInput,
 				});
 				setAccessToken(accessToken);
 				setRefreshToken(refreshToken);
-				setUserEmail(email);
+				setEmail(emailInput);
 				handleNavigate("/");
 			}
 		} catch (error) {
@@ -62,9 +62,9 @@ const LoginPage = ({
 							<Form.Control
 								type="email"
 								placeholder="Email"
-								value={email}
+								value={emailInput}
 								onSelect={() => setError("")}
-								onChange={(e) => setEmail(e.target.value)}
+								onChange={(e) => setEmailInput(e.target.value)}
 								className="mb-3"
 							/>
 						</Form.Group>
@@ -73,9 +73,9 @@ const LoginPage = ({
 							<Form.Control
 								type="password"
 								placeholder="Password"
-								value={password}
+								value={passwordInput}
 								onSelect={() => setError("")}
-								onChange={(e) => setPassword(e.target.value)}
+								onChange={(e) => setPasswordInput(e.target.value)}
 								className="mb-3"
 							/>
 						</Form.Group>
