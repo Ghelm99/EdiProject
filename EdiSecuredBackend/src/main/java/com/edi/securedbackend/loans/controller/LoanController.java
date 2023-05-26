@@ -16,13 +16,13 @@ public class LoanController {
 
 	private final LoanService loanService;
 
-	@PostMapping(params = {"userEmail", "bookId"})
+	@PostMapping(params = {"email", "bookId"})
 	public ResponseEntity<Loan> addLoan(
-			@RequestParam final String userEmail,
+			@RequestParam final String email,
 			@RequestParam final Long bookId
 	) {
 
-		return ResponseEntity.ok(this.loanService.addLoan(userEmail, bookId));
+		return ResponseEntity.ok(this.loanService.addLoan(email, bookId));
 	}
 
 	@DeleteMapping(params = "loanId")
@@ -56,17 +56,17 @@ public class LoanController {
 		}
 	}
 
-	// @GetMapping(params = "userEmail")
-	public ResponseEntity<List<Loan>> getLoansByUserEmail(
+	// @GetMapping(params = "email")
+	public ResponseEntity<List<Loan>> getLoansByEmail(
 
-			@RequestParam final String userEmail,
+			@RequestParam final String email,
 			@RequestParam(required = false) final Integer page,
 			@RequestParam(required = false) final Integer size,
 			@RequestParam(required = false) final String sortBy
 
 	) {
 		if (page == null && size == null && sortBy == null) {
-			return ResponseEntity.ok(this.loanService.getLoansByUserEmail(userEmail));
+			return ResponseEntity.ok(this.loanService.getLoansByEmail(email));
 		} else {
 
 			final int pageNumber = page != null ? page : 0;
@@ -74,16 +74,16 @@ public class LoanController {
 			final String sortField = sortBy != null ? sortBy : "loanId";
 
 			final Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortField));
-			return ResponseEntity.ok(this.loanService.getLoansByUserEmail(userEmail, pageable));
+			return ResponseEntity.ok(this.loanService.getLoansByEmail(email, pageable));
 		}
 	}
 
-	@GetMapping(params = "userEmail")
-	public ResponseEntity<List<Object>> getLoansByUserEmailSimplifiedWithBooks(
-			@RequestParam final String userEmail
+	@GetMapping(params = "email")
+	public ResponseEntity<List<Object>> getLoansByEmailSimplifiedWithBooks(
+			@RequestParam final String email
 	) {
 
-		return ResponseEntity.ok(this.loanService.getLoansByUserEmailWithBooks(userEmail));
+		return ResponseEntity.ok(this.loanService.getLoansByEmailWithBooks(email));
 	}
 
 	@GetMapping(params = "userId")
