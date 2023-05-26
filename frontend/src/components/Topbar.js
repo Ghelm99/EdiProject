@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 const Topbar = ({
 	accessToken,
 	refreshToken,
-	userEmail,
+	email,
 	setAccessToken,
 	setRefreshToken,
-	setUserEmail,
+	setEmail,
 	handleNavigate,
 }) => {
 	const handleLogout = () => {
 		handleNavigate("/");
 		setAccessToken("");
 		setRefreshToken("");
-		setUserEmail("");
+		setEmail("");
 	};
 
 	const [expanded, setExpanded] = useState(false);
@@ -57,7 +57,7 @@ const Topbar = ({
 										<i
 											className="bi bi-person-circle me-2"
 											style={{ fontSize: "1.5rem" }}></i>{" "}
-										{userEmail}
+										{email}
 									</Nav.Link>
 									<Button variant="danger" onClick={handleLogout}>
 										Log out

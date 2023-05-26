@@ -1,19 +1,17 @@
 import { useState } from "react";
 
-const useUserEmail = () => {
-	const [userEmail, setUserEmail] = useState(
-		localStorage.getItem("user_email") || ""
-	);
+const useEmail = () => {
+	const [email, setEmail] = useState(localStorage.getItem("email") || "");
 
-	const saveUserEmail = (userEmail) => {
-		localStorage.setItem("user_email", userEmail);
-		setUserEmail(userEmail);
+	const saveEmail = (email) => {
+		localStorage.setItem("email", email);
+		setEmail(email);
 	};
 
 	return {
-		userEmail,
-		setUserEmail: saveUserEmail,
+		email,
+		setEmail: saveEmail,
 	};
 };
 
-export default useUserEmail;
+export default useEmail;

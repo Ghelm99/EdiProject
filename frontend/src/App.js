@@ -10,15 +10,15 @@ import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import Topbar from "./components/Topbar";
 import useAccessToken from "./components/UseAccessToken";
+import useEmail from "./components/UseEmail";
 import useRefreshToken from "./components/UseRefreshToken";
-import useUserEmail from "./components/UseUserEmail";
 import "./css/main.min.css";
 
 const App = () => {
 	const { accessToken, setAccessToken } = useAccessToken();
 	const { refreshToken, setRefreshToken } = useRefreshToken();
 	const navigate = useNavigate();
-	const { userEmail, setUserEmail } = useUserEmail();
+	const { email, setEmail } = useEmail();
 
 	function handleNavigate(path) {
 		navigate(path);
@@ -27,18 +27,18 @@ const App = () => {
 	useEffect(() => {
 		console.log("access_token: " + localStorage.getItem("access_token"));
 		console.log("refresh_token: " + localStorage.getItem("refresh_token"));
-		console.log("user_email: " + localStorage.getItem("user_email"));
-	}, [accessToken, refreshToken, userEmail]);
+		console.log("email: " + localStorage.getItem("email"));
+	}, [accessToken, refreshToken, email]);
 
 	return (
 		<div className="App">
 			<Topbar
 				accessToken={accessToken}
 				refreshToken={refreshToken}
-				userEmail={userEmail}
+				email={email}
 				setAccessToken={setAccessToken}
 				setRefreshToken={setRefreshToken}
-				setUserEmail={setUserEmail}
+				setEmail={setEmail}
 				handleNavigate={handleNavigate}
 			/>
 			<div style={{ marginTop: "4rem", marginBottom: "4rem" }}>
@@ -66,7 +66,7 @@ const App = () => {
 							<LoginPage
 								setAccessToken={setAccessToken}
 								setRefreshToken={setRefreshToken}
-								setUserEmail={setUserEmail}
+								setEmail={setEmail}
 								handleNavigate={handleNavigate}
 							/>
 						}></Route>
