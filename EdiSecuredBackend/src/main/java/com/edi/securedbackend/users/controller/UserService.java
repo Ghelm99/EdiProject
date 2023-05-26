@@ -37,7 +37,7 @@ class UserService {
 		Optional<UserData> userDataOptional = this.userRepository.findByEmail(email);
 
 		if (userDataOptional.isEmpty()) {
-			throw new UserNotFoundException("The user corresponding to the username: " + email + " does not " +
+			throw new UserNotFoundException("The user corresponding to the email: " + email + " does not " +
 					"exist!");
 		}
 

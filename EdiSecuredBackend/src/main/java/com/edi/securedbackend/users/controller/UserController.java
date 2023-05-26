@@ -22,12 +22,12 @@ public class UserController {
 		return ResponseEntity.ok(this.userService.getUserById(userId));
 	}
 
-	@GetMapping(params = "username")
-	public ResponseEntity<?> getUserByUsername(@RequestParam final String username) {
+	@GetMapping(params = "email")
+	public ResponseEntity<?> getUserByEmail(@RequestParam final String email) {
 		final User user;
 
 		try {
-			user = this.userService.getUserByEmail(username);
+			user = this.userService.getUserByEmail(email);
 		} catch (final Exception exception) {
 			return ResponseEntity.badRequest()
 					.body(exception.getMessage());
@@ -36,15 +36,15 @@ public class UserController {
 		return ResponseEntity.ok(user);
 	}
 
-	@GetMapping(params = {"username", "password"})
-	public ResponseEntity<?> getUserByUsernameAndPassword(
-			@RequestParam final String username,
+	@GetMapping(params = {"email", "password"})
+	public ResponseEntity<?> getUserByEmailAndPassword(
+			@RequestParam final String email,
 			@RequestParam final String password
 	) {
 		final User user;
 
 		try {
-			user = this.userService.getUserByEmailAndPassword(username, password);
+			user = this.userService.getUserByEmailAndPassword(email, password);
 		} catch (final Exception exception) {
 			return ResponseEntity.badRequest()
 					.body(exception.getMessage());
