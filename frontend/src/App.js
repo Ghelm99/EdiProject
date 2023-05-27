@@ -9,12 +9,12 @@ import HomePage from "./components/HomePage";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import Topbar from "./components/Topbar";
-import useUserEmail from "./components/UseUserEmail";
+import useEmail from "./components/UseEmail";
 import "./css/main.min.css";
 
 const App = () => {
 	const navigate = useNavigate();
-	const { email, setEmail } = useUserEmail();
+	const { email, setEmail } = useEmail();
 
 	function handleNavigate(path) {
 		navigate(path);
