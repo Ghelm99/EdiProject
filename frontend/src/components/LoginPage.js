@@ -12,14 +12,15 @@ async function loginUser(credentials) {
 		}
 	);
 
-	const responseBody = await response.text();
+	const responseBody = await response.json();
 
 	return {
-		email: responseBody,
+		email: responseBody.email,
+		password: responseBody.password,
 	};
 }
 
-const LoginPage = ({ setEmail, handleNavigate }) => {
+const LoginPage = ({ setEmail, setPassword, handleNavigate }) => {
 	const [emailInput, setEmailInput] = useState("");
 	const [passwordInput, setPasswordInput] = useState("");
 	const [error, setError] = useState("");
@@ -30,11 +31,12 @@ const LoginPage = ({ setEmail, handleNavigate }) => {
 			if (emailInput === "" || passwordInput === "") {
 				setError("Please, complete the form.");
 			} else {
-				const { email } = await loginUser({
+				const { email, password } = await loginUser({
 					emailInput,
 					passwordInput,
 				});
 				setEmail(email);
+				setPassword(password);
 				handleNavigate("/");
 			}
 		} catch (error) {

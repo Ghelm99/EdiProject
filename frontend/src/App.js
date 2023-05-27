@@ -10,11 +10,13 @@ import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import Topbar from "./components/Topbar";
 import useEmail from "./components/UseEmail";
+import usePassword from "./components/UsePassword";
 import "./css/main.min.css";
 
 const App = () => {
 	const navigate = useNavigate();
 	const { email, setEmail } = useEmail();
+	const { password, setPassword } = usePassword();
 
 	function handleNavigate(path) {
 		navigate(path);
@@ -22,7 +24,8 @@ const App = () => {
 
 	useEffect(() => {
 		console.log("email: " + localStorage.getItem("email"));
-	}, [email]);
+		console.log("password: " + localStorage.getItem("password"));
+	}, [email, password]);
 
 	return (
 		<div className="App">
@@ -49,7 +52,11 @@ const App = () => {
 					<Route
 						path="/login"
 						element={
-							<LoginPage setEmail={setEmail} handleNavigate={handleNavigate} />
+							<LoginPage
+								setEmail={setEmail}
+								setPassword={setPassword}
+								handleNavigate={handleNavigate}
+							/>
 						}></Route>
 					<Route path="/signup" element={<SignupPage />}></Route>
 				</Routes>
