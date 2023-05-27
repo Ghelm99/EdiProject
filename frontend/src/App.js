@@ -49,10 +49,7 @@ const App = () => {
 					<Route
 						path="/login"
 						element={
-							<LoginPage
-								setUserEmail={setEmail}
-								handleNavigate={handleNavigate}
-							/>
+							<LoginPage setEmail={setEmail} handleNavigate={handleNavigate} />
 						}></Route>
 					<Route path="/signup" element={<SignupPage />}></Route>
 				</Routes>

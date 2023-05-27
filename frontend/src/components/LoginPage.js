@@ -19,7 +19,7 @@ async function loginUser(credentials) {
 	};
 }
 
-const LoginPage = ({ setUserEmail, handleNavigate }) => {
+const LoginPage = ({ setEmail, handleNavigate }) => {
 	const [emailInput, setEmailInput] = useState("");
 	const [passwordInput, setPasswordInput] = useState("");
 	const [error, setError] = useState("");
@@ -34,7 +34,7 @@ const LoginPage = ({ setUserEmail, handleNavigate }) => {
 					emailInput,
 					passwordInput,
 				});
-				setUserEmail(email);
+				setEmail(email);
 				handleNavigate("/");
 			}
 		} catch (error) {
