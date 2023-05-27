@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/userAccess")
@@ -20,13 +23,16 @@ public class LoginController {
 
 	@PostMapping(value = "/login", params = {"email", "password"})
 	public ResponseEntity<?> login(
-
 			@RequestParam final String email,
 			@RequestParam final String password
-
 	) {
 		userSessionData.login(email, password);
-		return ResponseEntity.ok(userSessionData.getEmail());
+
+		Map<String, String> userCredentials = new HashMap<>();
+		userCredentials.put("email", userSessionData.getEmail());
+		userCredentials.put("password", userSessionData.getPassword());
+
+		return ResponseEntity.ok(userCredentials);
 	}
 
 	@PostMapping(value = "/logout")
