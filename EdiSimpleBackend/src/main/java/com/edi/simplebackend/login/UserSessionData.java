@@ -4,6 +4,9 @@ import com.edi.simplebackend.users.model.User;
 import com.edi.simplebackend.users.model.UserData;
 import com.edi.simplebackend.users.repository.UserRepository;
 import java.util.Optional;
+import java.util.UUID;
+
+import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,8 +23,9 @@ public class UserSessionData {
 	private String email;
 	private String password;
 	private Boolean isUserLoggedIn;
+	private String cookieToken;
 
-	public void login(String email, String password) {
+	public void login(String email, String password, HttpSession httpSession) {
 
 		final Optional<UserData> optionalUserData = userRepository.findByEmail(email);
 
@@ -36,12 +40,15 @@ public class UserSessionData {
 				this.email = user.getEmail();
 				this.password = user.getPassword();
 				this.isUserLoggedIn = true;
+				this.cookieToken = generateCookieToken();
+				storeCookieTokenInSession(this.cookieToken, httpSession);
 
 			} else {
 				this.userId = null;
 				this.email = "";
 				this.password = "";
 				this.isUserLoggedIn = false;
+				this.cookieToken = null;
 			}
 		}
 	}
@@ -52,6 +59,15 @@ public class UserSessionData {
 		email = null;
 		password = null;
 		isUserLoggedIn = false;
+		cookieToken = null;
+
 	}
 
+	private String generateCookieToken() {
+		return UUID.randomUUID().toString().replace("-","");
+	}
+
+	private void storeCookieTokenInSession(String token, HttpSession httpSession) {
+		httpSession.setAttribute("cookieToken", token);
+	}
 }

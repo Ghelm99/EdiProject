@@ -1,5 +1,6 @@
 package com.edi.simplebackend.login;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +22,21 @@ public class LoginController {
 				.body(userSessionData);
 	}
 
-	@PostMapping(value = "/login", params = {"email", "password"})
-	public ResponseEntity<?> login(
-			@RequestParam final String email,
-			@RequestParam final String password
-	) {
-		userSessionData.login(email, password);
+	@PostMapping(value = "/login")
+	public ResponseEntity<?> login(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
+		String email = requestBody.get("email");
+		String password = requestBody.get("password");
+
+		userSessionData.login(email, password, request.getSession());
 
 		Map<String, String> userCredentials = new HashMap<>();
 		userCredentials.put("email", userSessionData.getEmail());
 		userCredentials.put("password", userSessionData.getPassword());
+		userCredentials.put("cookieToken", userSessionData.getCookieToken());
 
 		return ResponseEntity.ok(userCredentials);
 	}
+
 
 	@PostMapping(value = "/logout")
 	public ResponseEntity<?> logout() {
