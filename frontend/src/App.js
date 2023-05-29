@@ -23,8 +23,6 @@ const App = () => {
 	}
 
 	useEffect(() => {
-		console.log("email: " + localStorage.getItem("email"));
-		console.log("password: " + localStorage.getItem("password"));
 	}, [email, password]);
 
 	return (

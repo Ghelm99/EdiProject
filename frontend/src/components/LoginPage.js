@@ -3,16 +3,22 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 async function loginUser(credentials) {
 	const response = await fetch(
-		`http://localhost:8080/userAccess/login?email=${credentials.emailInput}&password=${credentials.passwordInput}`,
+		`http://localhost:8080/userAccess/login`,
 		{
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
+			body: JSON.stringify({
+				email: credentials.emailInput,
+				password: credentials.passwordInput
+			})
 		}
 	);
 
 	const responseBody = await response.json();
+
+	localStorage.setItem("cookieToken", responseBody.cookieToken);
 
 	return {
 		email: responseBody.email,
