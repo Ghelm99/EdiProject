@@ -134,30 +134,6 @@ class LoanService {
 		return output;
 	}
 
-	List<Object> getLoansByEmailWithBooks(final String email, Pageable pageable) {
-
-		List<Object> output = new ArrayList<>();
-		List<Loan> loanList = this.loanRepository.findByUserData_Email(email, pageable)
-				.stream()
-				.map(LoanData::transferToLoan)
-				.toList();
-
-		loanList.forEach(loan -> {
-			Book loanBook;
-			Optional<BookData> loanBookDataOptional = this.bookRepository.findById(loan.getBookId());
-			Map<String, Object> loanWithBook = new HashMap<>();
-
-			if (loanBookDataOptional.isPresent()) {
-				loanBook = loanBookDataOptional.get()
-						.transferToBook();
-				loanWithBook.put("loan", loan);
-				loanWithBook.put("book", loanBook);
-				output.add(loanWithBook);
-			}
-		});
-		return output;
-	}
-
 	List<Loan> getLoansByUserId(final Long userId, final Pageable pageable) {
 
 		return this.loanRepository.findByUserData_UserId(userId, pageable)
