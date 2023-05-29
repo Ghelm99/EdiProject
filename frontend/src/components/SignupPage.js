@@ -40,6 +40,8 @@ const SignupPage = ({ handleNavigate }) => {
 			if (!(passwordInput === confirmPasswordInput)) {
 				setPasswordError("The two password don't match!");
 			} else if (
+				nameInput === "" ||
+				surnameInput === "" ||
 				emailInput === "" ||
 				passwordInput === "" ||
 				confirmPasswordInput === ""
@@ -57,8 +59,11 @@ const SignupPage = ({ handleNavigate }) => {
 			}
 		} catch (error) {
 			setSignupError(error.message);
+			setNameInput("");
+			setSurnameInput("");
 			setEmailInput("");
 			setPasswordInput("");
+			setConfirmPasswordInput("");
 		}
 	};
 
