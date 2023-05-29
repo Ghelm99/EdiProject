@@ -70,7 +70,7 @@ const SignupPage = ({ handleNavigate }) => {
 					<Form onSubmit={handleSubmit}>
 						<Form.Group controlId="formBasicName">
 							<Form.Control
-								placeholder="Email"
+								placeholder="Name"
 								value={nameInput}
 								onSelect={() => {
 									setPasswordError("");

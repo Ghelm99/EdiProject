@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 async function loginUser(credentials) {
+	const { email, password } = credentials;
 	const response = await fetch("http://localhost:8080/auth/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(credentials),
+		body: JSON.stringify({ email, password }),
 	});
 
 	const data = await response.json();
@@ -38,10 +39,8 @@ const LoginPage = ({
 			if (emailInput === "" || passwordInput === "") {
 				setError("Please, complete the form.");
 			} else {
-				const { accessToken, refreshToken } = await loginUser({
-					emailInput,
-					passwordInput,
-				});
+				const credentials = { email: emailInput, password: passwordInput }; // Create credentials object
+				const { accessToken, refreshToken } = await loginUser(credentials); // Pass credentials object
 				setAccessToken(accessToken);
 				setRefreshToken(refreshToken);
 				setEmail(emailInput);
