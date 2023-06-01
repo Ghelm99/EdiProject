@@ -5,8 +5,8 @@ import com.edi.simplebackend.users.model.UserData;
 import com.edi.simplebackend.users.repository.UserRepository;
 import java.util.Optional;
 import java.util.UUID;
-
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -25,7 +25,7 @@ public class UserSessionData {
 	private Boolean isUserLoggedIn;
 	private String cookieToken;
 
-	public void login(String email, String password, HttpSession httpSession) {
+	public void login(String email, String password) {
 
 		final Optional<UserData> optionalUserData = userRepository.findByEmail(email);
 
@@ -41,8 +41,6 @@ public class UserSessionData {
 				this.password = user.getPassword();
 				this.isUserLoggedIn = true;
 				this.cookieToken = generateCookieToken();
-				storeCookieTokenInSession(this.cookieToken, httpSession);
-
 			} else {
 				this.userId = null;
 				this.email = "";
@@ -67,7 +65,13 @@ public class UserSessionData {
 		return UUID.randomUUID().toString().replace("-","");
 	}
 
-	private void storeCookieTokenInSession(String token, HttpSession httpSession) {
+	/*private void storeCookieTokenInSession(String token, HttpSession httpSession) {
 		httpSession.setAttribute("cookieToken", token);
+	}*/
+
+	public void storeCookieTokenInResponse(String token, HttpServletResponse response) {
+		Cookie cookie = new Cookie("cookieToken", token);
+		cookie.setMaxAge(3600);
+		response.addCookie(cookie);
 	}
 }

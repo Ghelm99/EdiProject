@@ -2,10 +2,15 @@ package com.edi.simplebackend.books.controller;
 
 import com.edi.simplebackend.books.model.Book;
 import java.util.List;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
 	private final BookService bookService;
+	@Autowired
+	private HttpServletRequest request;
 
 	@GetMapping
 	public ResponseEntity<List<Book>> getAllBooks(
@@ -27,6 +34,10 @@ public class BookController {
 			@RequestParam(required = false) final String sortBy
 
 	) {
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
 		if (page == null && size == null && sortBy == null) {
 			return ResponseEntity.ok(this.bookService.getBooks());
 		} else {
@@ -42,18 +53,26 @@ public class BookController {
 
 	@GetMapping(params = "id")
 	public ResponseEntity<Book> getBookById(@RequestParam final Long id) {
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
 		return ResponseEntity.ok(this.bookService.getBookById(id));
 	}
 
 	@GetMapping(params = "author")
 	public ResponseEntity<List<Book>> getBooksByAuthor(
-
 			@RequestParam final String author,
 			@RequestParam(required = false) final Integer page,
 			@RequestParam(required = false) final Integer size,
 			@RequestParam(required = false) final String sortBy
 
 	) {
+
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
 		if (page == null && size == null && sortBy == null) {
 			return ResponseEntity.ok(this.bookService.getBooksByAuthor(author));
 		} else {
@@ -76,6 +95,11 @@ public class BookController {
 			@RequestParam(required = false) final String sortBy
 
 	) {
+
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
 		if (page == null && size == null && sortBy == null) {
 			return ResponseEntity.ok(this.bookService.getBooksByIsbn(isbn));
 		} else {
@@ -98,6 +122,11 @@ public class BookController {
 			@RequestParam(required = false) final String sortBy
 
 	) {
+
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
 		if (page == null && size == null && sortBy == null) {
 			return ResponseEntity.ok(this.bookService.getBooksByPublisher(publisher));
 		} else {
@@ -120,6 +149,10 @@ public class BookController {
 			@RequestParam(required = false) final String sortBy
 
 	) {
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
 		if (page == null && size == null && sortBy == null) {
 			return ResponseEntity.ok(this.bookService.getBooksByTitle(title));
 		} else {
@@ -132,5 +165,19 @@ public class BookController {
 			return ResponseEntity.ok(this.bookService.getBooksByTitle(title, pageable));
 		}
 	}
+
+	private boolean isUserLoggedIn() {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("cookieToken".equals(cookie.getName())) {
+					//currently just checking if the names are equal
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 
 }

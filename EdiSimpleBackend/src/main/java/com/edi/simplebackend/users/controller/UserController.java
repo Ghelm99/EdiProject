@@ -1,7 +1,11 @@
 package com.edi.simplebackend.users.controller;
 
 import com.edi.simplebackend.users.model.User;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 	private final UserService userService;
+	@Autowired
+	private HttpServletRequest request;
 
 	@PostMapping
 	public ResponseEntity<User> addUser(@RequestBody final User user) {
@@ -25,6 +31,10 @@ public class UserController {
 			@RequestParam String newPassword
 
 	) {
+
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
 
 		return ResponseEntity.ok(userService.changeUserPassword(email, password, newPassword));
 	}
@@ -70,12 +80,29 @@ public class UserController {
 
 		final User retreievedUser = this.userService.updateUser(id, user);
 
+		if (!isUserLoggedIn()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
 		if (retreievedUser == null) {
 			return ResponseEntity.notFound()
 					.build();
 		}
 
 		return ResponseEntity.ok(retreievedUser);
+	}
+
+	private boolean isUserLoggedIn() {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("cookieToken".equals(cookie.getName())) {
+					//currently just checking if the names are equal
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }
