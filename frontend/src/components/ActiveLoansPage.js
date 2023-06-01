@@ -17,6 +17,11 @@ const ActiveLoansPage = () => {
 				`/loans?email=${localStorage.getItem("email")}`,
 				{
 					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						// Passing the cookie here
+						"Cookie": document.cookie
+					  }
 				}
 			);
 			const data = await response.json();

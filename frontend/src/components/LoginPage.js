@@ -18,12 +18,21 @@ async function loginUser(credentials) {
 
 	const responseBody = await response.json();
 
-	localStorage.setItem("cookieToken", responseBody.cookieToken);
-
-	return {
+	if (response.ok) {
+		// Handle successful login
+		const { email, password, cookieToken } = responseBody;
+		// Store the received cookie token 
+		document.cookie = `cookieToken=${cookieToken}; path=/`;
+		console.log(document.cookie);
+		return { email, password, cookieToken };
+	  } else {
+		// Handle login error
+		throw new Error(responseBody.error);
+	  }
+	/*return {
 		email: responseBody.email,
 		password: responseBody.password,
-	};
+	};	*/
 }
 
 const LoginPage = ({ setEmail, setPassword, handleNavigate }) => {
@@ -31,18 +40,22 @@ const LoginPage = ({ setEmail, setPassword, handleNavigate }) => {
 	const [passwordInput, setPasswordInput] = useState("");
 	const [error, setError] = useState("");
 
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			if (emailInput === "" || passwordInput === "") {
 				setError("Please, complete the form.");
 			} else {
-				const { email, password } = await loginUser({
+				const { email, password, cookieToken } = await loginUser({
 					emailInput,
 					passwordInput,
 				});
 				setEmail(email);
 				setPassword(password);
+
+				document.cookie = `cookieToken=${cookieToken}; path=/`;
+
 				handleNavigate("/");
 			}
 		} catch (error) {

@@ -69,15 +69,14 @@ const CreateLoanPage = () => {
 
 	const handleCreateLoan = async (bookId) => {
 		const email = localStorage.getItem("email");
-
 		try {
 			const response = await fetch(
 				`http://localhost:8080/loans?email=${email}&bookId=${bookId}`,
 				{
 					method: "POST",
+					credentials: "include",
 				}
 			);
-
 			if (!response.ok) {
 				throw new Error("Network response was not ok");
 			}
