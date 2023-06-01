@@ -42,9 +42,9 @@ public class LoginController {
 
 
 	@PostMapping(value = "/logout")
-	public ResponseEntity<?> logout() {
+	public ResponseEntity<?> logout(HttpServletResponse response) {
 
-		userSessionData.logout();
+		userSessionData.logout(response);
 		return ResponseEntity.ok(userSessionData);
 	}
 

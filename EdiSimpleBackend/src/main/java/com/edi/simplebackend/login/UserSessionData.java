@@ -51,7 +51,7 @@ public class UserSessionData {
 		}
 	}
 
-	public void logout() {
+	public void logout(HttpServletResponse response) {
 
 		userId = null;
 		email = null;
@@ -59,6 +59,11 @@ public class UserSessionData {
 		isUserLoggedIn = false;
 		cookieToken = null;
 
+		// When the user logs out the cookie max age is set to 0 so that the browser deletes it from its cache
+		Cookie cookie = new Cookie("cookieToken", "");
+		cookie.setPath("/");
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
 	}
 
 	private String generateCookieToken() {
