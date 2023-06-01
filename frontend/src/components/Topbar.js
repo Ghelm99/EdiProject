@@ -6,6 +6,7 @@ const Topbar = ({ email, setEmail, handleNavigate }) => {
 	const handleLogout = () => {
 		handleNavigate("/");
 		setEmail("");
+		document.cookie = "cookieToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 	};
 
 	const [expanded, setExpanded] = useState(false);
