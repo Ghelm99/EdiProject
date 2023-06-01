@@ -1,5 +1,6 @@
 package com.edi.simplebackend.users.controller;
 
+import com.edi.simplebackend.login.UserSessionData;
 import com.edi.simplebackend.users.model.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 	private final UserService userService;
+	private final UserSessionData userSessionData;
 	@Autowired
 	private HttpServletRequest request;
 
@@ -28,11 +30,12 @@ public class UserController {
 
 			@RequestParam String email,
 			@RequestParam String password,
-			@RequestParam String newPassword
+			@RequestParam String newPassword,
+			@RequestHeader(value = "Cookie", required = false) String cookie
 
 	) {
 
-		if (!isUserLoggedIn()) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -76,13 +79,15 @@ public class UserController {
 	}
 
 	@PutMapping(params = "id")
-	public ResponseEntity<User> updateUser(@RequestParam final Long id, @RequestBody final User user) {
-
-		final User retreievedUser = this.userService.updateUser(id, user);
-
-		if (!isUserLoggedIn()) {
+	public ResponseEntity<User> updateUser(
+			@RequestParam final Long id,
+			@RequestBody final User user,
+			@RequestHeader(value = "Cookie", required = false) String cookie) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
+
+		final User retreievedUser = this.userService.updateUser(id, user);
 
 		if (retreievedUser == null) {
 			return ResponseEntity.notFound()
@@ -92,13 +97,14 @@ public class UserController {
 		return ResponseEntity.ok(retreievedUser);
 	}
 
-	private boolean isUserLoggedIn() {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("cookieToken".equals(cookie.getName())) {
-					//currently just checking if the names are equal
-					return true;
+	private boolean isUserLoggedIn(String cookie) {
+		if (cookie != null && cookie.contains("cookieToken")) {
+			// Extract the cookie token from the "cookie" string
+			String[] cookieParts = cookie.split(";");
+			for (String cookiePart : cookieParts) {
+				if (cookiePart.trim().startsWith("cookieToken=")) {
+					String token = cookiePart.trim().substring("cookieToken=".length());
+					return token.equals(userSessionData.getCookieToken());
 				}
 			}
 		}

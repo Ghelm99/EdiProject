@@ -3,6 +3,7 @@ package com.edi.simplebackend.books.controller;
 import com.edi.simplebackend.books.model.Book;
 import java.util.List;
 
+import com.edi.simplebackend.login.UserSessionData;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
 	private final BookService bookService;
+	private final UserSessionData userSessionData;
 	@Autowired
 	private HttpServletRequest request;
 
@@ -31,10 +30,11 @@ public class BookController {
 
 			@RequestParam(required = false) final Integer page,
 			@RequestParam(required = false) final Integer size,
-			@RequestParam(required = false) final String sortBy
+			@RequestParam(required = false) final String sortBy,
+			@RequestHeader(value = "Cookie", required = false) String cookie
 
 	) {
-		if (!isUserLoggedIn()) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -52,8 +52,10 @@ public class BookController {
 	}
 
 	@GetMapping(params = "id")
-	public ResponseEntity<Book> getBookById(@RequestParam final Long id) {
-		if (!isUserLoggedIn()) {
+	public ResponseEntity<Book> getBookById(
+			@RequestParam final Long id,
+			@RequestHeader(value = "Cookie", required = false) String cookie) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -65,11 +67,11 @@ public class BookController {
 			@RequestParam final String author,
 			@RequestParam(required = false) final Integer page,
 			@RequestParam(required = false) final Integer size,
-			@RequestParam(required = false) final String sortBy
-
+			@RequestParam(required = false) final String sortBy,
+			@RequestHeader(value = "Cookie", required = false) String cookie
 	) {
 
-		if (!isUserLoggedIn()) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -92,11 +94,12 @@ public class BookController {
 			@RequestParam final String isbn,
 			@RequestParam(required = false) final Integer page,
 			@RequestParam(required = false) final Integer size,
-			@RequestParam(required = false) final String sortBy
+			@RequestParam(required = false) final String sortBy,
+			@RequestHeader(value = "Cookie", required = false) String cookie
 
 	) {
 
-		if (!isUserLoggedIn()) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -119,11 +122,12 @@ public class BookController {
 			@RequestParam final String publisher,
 			@RequestParam(required = false) final Integer page,
 			@RequestParam(required = false) final Integer size,
-			@RequestParam(required = false) final String sortBy
+			@RequestParam(required = false) final String sortBy,
+			@RequestHeader(value = "Cookie", required = false) String cookie
 
 	) {
 
-		if (!isUserLoggedIn()) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -146,10 +150,11 @@ public class BookController {
 			@RequestParam final String title,
 			@RequestParam(required = false) final Integer page,
 			@RequestParam(required = false) final Integer size,
-			@RequestParam(required = false) final String sortBy
+			@RequestParam(required = false) final String sortBy,
+			@RequestHeader(value = "Cookie", required = false) String cookie
 
 	) {
-		if (!isUserLoggedIn()) {
+		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
@@ -166,13 +171,14 @@ public class BookController {
 		}
 	}
 
-	private boolean isUserLoggedIn() {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("cookieToken".equals(cookie.getName())) {
-					//currently just checking if the names are equal
-					return true;
+	private boolean isUserLoggedIn(String cookie) {
+		if (cookie != null && cookie.contains("cookieToken")) {
+			// Extract the cookie token from the "cookie" string
+			String[] cookieParts = cookie.split(";");
+			for (String cookiePart : cookieParts) {
+				if (cookiePart.trim().startsWith("cookieToken=")) {
+					String token = cookiePart.trim().substring("cookieToken=".length());
+					return token.equals(userSessionData.getCookieToken());
 				}
 			}
 		}
