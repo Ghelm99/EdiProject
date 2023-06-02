@@ -2,8 +2,8 @@
 # Build stage
 #
 FROM maven:3.8.1-adoptopenjdk-11 AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
+COPY EdiSecuredBackend/src /home/app/src
+COPY EdiSecuredBackend/pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 #
