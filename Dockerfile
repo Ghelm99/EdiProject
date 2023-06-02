@@ -9,7 +9,7 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 # Package stage
 #
-FROM adoptopenjdk:17-jre-hotspot
+FROM openjdk:17-jre-slim
 COPY --from=build /home/app/target/getyourway-0.0.1-SNAPSHOT.jar /usr/local/lib/edi.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/local/lib/edi.jar"]
