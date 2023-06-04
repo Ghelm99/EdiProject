@@ -26,20 +26,27 @@ public class UserController {
 	}
 
 	@PutMapping(params = {"email", "password", "newPassword"})
-	public ResponseEntity<User> changeUserPassword(
+	public ResponseEntity<?> changeUserPassword(
 
 			@RequestParam String email,
 			@RequestParam String password,
 			@RequestParam String newPassword,
 			@RequestHeader(value = "Cookie", required = false) String cookie
-
 	) {
-
 		if (!isUserLoggedIn(cookie)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
-		return ResponseEntity.ok(userService.changeUserPassword(email, password, newPassword));
+		try {
+			User updatedUser = userService.changeUserPassword(email, password, newPassword);
+			if (updatedUser != null) {
+				return ResponseEntity.ok(updatedUser);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 
 	@GetMapping(params = "email")

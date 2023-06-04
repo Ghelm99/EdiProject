@@ -52,14 +52,19 @@ class UserService {
 	}
 
 	User changeUserPassword(final String email, final String password, final String newPassword) {
-
-		User outputUser = getUserByEmailAndPassword(email, password);
-
-		if (outputUser != null) {
-			outputUser.setPassword(newPassword);
+		try {
+			User outputUser = getUserByEmailAndPassword(email, password);
+			if (outputUser != null) {
+				UserData userData = outputUser.transferToUserData();
+				userData.setPassword(newPassword);
+				this.userRepository.save(userData);
+				return userData.transferToUser();
+			} else {
+				throw new UserNotFoundException("User not found for email: " + email);
+			}
+		} catch (UserNotFoundException e) {
+			return null;
 		}
-
-		return outputUser;
 	}
 
 	User getUserByEmail(final String email) throws UserNotFoundException {
