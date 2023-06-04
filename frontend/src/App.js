@@ -12,6 +12,7 @@ import Topbar from "./components/Topbar";
 import useEmail from "./components/UseEmail";
 import usePassword from "./components/UsePassword";
 import "./css/main.min.css";
+import ChangePasswordPage from "./components/ChangePasswordPage";
 
 const App = () => {
 	const navigate = useNavigate();
@@ -57,6 +58,7 @@ const App = () => {
 							/>
 						}></Route>
 					<Route path="/signup" element={<SignupPage />}></Route>
+					<Route path="/changePassword" element={<ChangePasswordPage email={email} />}></Route>
 				</Routes>
 			</div>
 			<Footer />
