@@ -33,7 +33,7 @@ public class SecurityConfiguration {
 				.cors(Customizer.withDefaults())
 				.csrf()
 				.disable()
-				.requiresChannel(channel -> channel.anyRequest().requiresSecure())
+				//.requiresChannel(channel -> channel.anyRequest().requiresSecure())
 				.authorizeRequests()
 				.requestMatchers("/auth/**")
 				.permitAll()
