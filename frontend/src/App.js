@@ -23,6 +23,28 @@ const App = () => {
 		navigate(path);
 	}
 
+	const handleLogout = async (path) => {
+		try {
+			const response = await fetch(
+				`http://localhost:8080/userAccess/logout`,
+				{
+					method: "POST",
+				}
+			);
+			if (response.ok) {
+				setEmail("");
+				setPassword("");
+				navigate(path);
+			} else {
+				throw new Error("Network response was not ok");
+			}
+		} catch (error) {
+			console.error(error);
+		}
+		
+	};
+
+
 	useEffect(() => {
 	}, [email, password]);
 
@@ -32,6 +54,7 @@ const App = () => {
 				email={email}
 				setEmail={setEmail}
 				handleNavigate={handleNavigate}
+				handleLogout={handleLogout}
 			/>
 			<div style={{ marginTop: "4rem", marginBottom: "4rem" }}>
 				<Routes>
@@ -58,7 +81,7 @@ const App = () => {
 							/>
 						}></Route>
 					<Route path="/signup" element={<SignupPage />}></Route>
-					<Route path="/changePassword" element={<ChangePasswordPage email={email} />}></Route>
+					<Route path="/changePassword" element={<ChangePasswordPage email={email} handleLogout={handleLogout} />}></Route>
 				</Routes>
 			</div>
 			<Footer />

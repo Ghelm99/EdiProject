@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
 
-const ChangePasswordPage = ({ email }) => {
+const ChangePasswordPage = ({ email, handleLogout }) => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,6 +27,7 @@ const ChangePasswordPage = ({ email }) => {
         setNewPassword("");
         setConfirmPassword("");
         setErrorMessage("");
+		handleLogout("/login");
       } else if (response.status === 401) {
         setErrorMessage("Invalid password. Please try again.");
       } else {

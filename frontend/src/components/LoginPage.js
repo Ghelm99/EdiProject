@@ -18,10 +18,10 @@ async function loginUser(credentials) {
 
 	const responseBody = await response.json();
 
-	if (response.ok) {
+	if (response.status === 200) {
 		// Handle successful login
 		const { email, password, cookieToken } = responseBody;
-		// Store the received cookie token 
+		// Store the received cookie token
 		document.cookie = `cookieToken=${cookieToken}; path=/`;
 		console.log(document.cookie);
 		return { email, password, cookieToken };
@@ -29,10 +29,6 @@ async function loginUser(credentials) {
 		// Handle login error
 		throw new Error(responseBody.error);
 	  }
-	/*return {
-		email: responseBody.email,
-		password: responseBody.password,
-	};	*/
 }
 
 const LoginPage = ({ setEmail, setPassword, handleNavigate }) => {

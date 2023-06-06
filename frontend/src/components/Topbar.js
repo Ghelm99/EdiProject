@@ -2,15 +2,17 @@ import { useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 
-const Topbar = ({ email, setEmail, handleNavigate }) => {
-  const handleLogout = () => {
-    handleNavigate("/");
-    setEmail("");
-    document.cookie =
-      "cookieToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  };
+const Topbar = ({ email, handleLogout }) => {
 
   const [expanded, setExpanded] = useState(false);
+
+  const handleLogoutClick = async () => {
+    try {
+      await handleLogout("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -56,7 +58,7 @@ const Topbar = ({ email, setEmail, handleNavigate }) => {
                     ></i>{" "}
                     {email}
                   </NavLink>
-                  <Button variant="danger" onClick={handleLogout}>
+                  <Button variant="danger" onClick={handleLogoutClick}>
                     Log out
                   </Button>
                 </Nav.Item>
