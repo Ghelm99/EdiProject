@@ -5,6 +5,8 @@ import com.edi.simplebackend.users.model.UserData;
 import com.edi.simplebackend.users.repository.UserRepository;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserSessionData {
 
+	@JsonIgnore
 	private final UserRepository userRepository;
 	private Long userId;
 	private String email;
@@ -47,7 +50,10 @@ public class UserSessionData {
 				this.password = "";
 				this.isUserLoggedIn = false;
 				this.cookieToken = null;
+				throw new IllegalArgumentException("Wrong credentials");
 			}
+		} else {
+			throw new IllegalArgumentException("User not found");
 		}
 	}
 

@@ -3,6 +3,7 @@ package com.edi.simplebackend.login;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,16 +29,19 @@ public class LoginController {
 		String email = requestBody.get("email");
 		String password = requestBody.get("password");
 
-		userSessionData.login(email, password);
+		try {
+			userSessionData.login(email, password);
 
-		Map<String, String> userCredentials = new HashMap<>();
-		userCredentials.put("email", userSessionData.getEmail());
-		userCredentials.put("password", userSessionData.getPassword());
-		userCredentials.put("cookieToken", userSessionData.getCookieToken());
+			Map<String, String> userCredentials = new HashMap<>();
+			userCredentials.put("email", userSessionData.getEmail());
+			userCredentials.put("password", userSessionData.getPassword());
+			userCredentials.put("cookieToken", userSessionData.getCookieToken());
+			userSessionData.storeCookieTokenInResponse(userSessionData.getCookieToken() ,response);
 
-		userSessionData.storeCookieTokenInResponse(userSessionData.getCookieToken() ,response);
-
-		return ResponseEntity.ok(userCredentials);
+			return ResponseEntity.ok(userCredentials);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+		}
 	}
 
 
