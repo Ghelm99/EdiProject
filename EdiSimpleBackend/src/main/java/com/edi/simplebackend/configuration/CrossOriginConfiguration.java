@@ -15,9 +15,9 @@ public class CrossOriginConfiguration {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOriginPatterns("*")
-						.allowedMethods("*")
-						.allowedHeaders("*")
+						.allowedOriginPatterns("http://localhost:3000")
+						.allowedMethods("GET", "POST", "PUT", "DELETE")
+						.allowedHeaders("Authorization", "Content-Type", "Set-Cookie")
 						.allowCredentials(true)
 						.maxAge(3600);
 			}

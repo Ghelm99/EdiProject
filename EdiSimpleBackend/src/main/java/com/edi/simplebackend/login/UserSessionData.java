@@ -49,7 +49,7 @@ public class UserSessionData {
 				this.email = "";
 				this.password = "";
 				this.isUserLoggedIn = false;
-				this.cookieToken = null;
+				//this.cookieToken = null;
 				throw new IllegalArgumentException("Wrong credentials");
 			}
 		} else {
@@ -69,6 +69,9 @@ public class UserSessionData {
 		Cookie cookie = new Cookie("cookieToken", "");
 		cookie.setPath("/");
 		cookie.setMaxAge(0);
+		cookie.setHttpOnly(true);
+		//cookie.setSecure(true);
+		//cookie.setDomain("http://localhost:3000");
 		response.addCookie(cookie);
 	}
 
@@ -76,13 +79,14 @@ public class UserSessionData {
 		return UUID.randomUUID().toString().replace("-","");
 	}
 
-	/*private void storeCookieTokenInSession(String token, HttpSession httpSession) {
-		httpSession.setAttribute("cookieToken", token);
-	}*/
 
 	public void storeCookieTokenInResponse(String token, HttpServletResponse response) {
 		Cookie cookie = new Cookie("cookieToken", token);
 		cookie.setMaxAge(3600);
+		cookie.setHttpOnly(true);
+		//cookie.setSecure(true);
+		//cookie.setDomain("http://localhost:3000");
 		response.addCookie(cookie);
+
 	}
 }
