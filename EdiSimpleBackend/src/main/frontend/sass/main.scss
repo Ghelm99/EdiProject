@@ -1,0 +1,56 @@
+/* custom .scss */
+// Define your custom color variables
+// Define your custom blue colors
+$my-blue: #0066cc;
+$my-blue-light: #0066ff;
+$my-blue-dark: #006699;
+
+// Override Bootstrap's color variables with your custom blue colors
+$primary: $my-blue;
+$secondary: $my-blue-light;
+
+@font-face {
+	font-family: "KlinicSlab";
+	src: url("/font/KlinicSlabBook.otf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "KlinicSlab";
+	src: url("/font/KlinicSlabBold.otf") format("truetype");
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "KlinicSlab";
+	src: url("/font/KlinicSlabBookIt.otf") format("truetype");
+	font-weight: normal;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "KlinicSlab";
+	src: url("/font/KlinicSlabBoldIt.otf") format("truetype");
+	font-weight: bold;
+	font-style: italic;
+}
+
+// Override the default font in Bootstrap by setting the $font-family-base variable to Roboto
+$font-family-base: "KlinicSlab", sans-serif;
+
+/* import functions & variables */
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+/* defining a custom theme */
+$custom-theme-colors: (
+	"altdark": #000099,
+);
+
+$theme-colors: map-merge($custom-theme-colors, $theme-colors);
+
+/* import bootstrap scss */
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css");
