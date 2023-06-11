@@ -18,6 +18,7 @@ const BooksPage = () => {
 	useEffect(() => {
 		fetch("https://first-level-backend.up.railway.app/books", {
 			method: "GET",
+			credentials: "include",
 		})
 			.then((response) => response.json())
 			.then((data) => setAllBooks(data))
@@ -27,6 +28,7 @@ const BooksPage = () => {
 	useEffect(() => {
 		fetch(queryUrl, {
 			method: "GET",
+			credentials: "include",
 		})
 			.then((response) => response.json())
 			.then((data) => setPageBooks(data))

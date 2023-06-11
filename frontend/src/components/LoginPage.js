@@ -6,6 +6,7 @@ async function loginUser(credentials) {
 		`https://first-level-backend.up.railway.app/userAccess/login`,
 		{
 			method: "POST",
+			credentials: "include",
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -22,7 +23,7 @@ async function loginUser(credentials) {
 		// Handle successful login
 		const { email, password, cookieToken } = responseBody;
 		// Store the received cookie token
-		document.cookie = `cookieToken=${cookieToken}; path=/`;
+		document.cookie = `cookieToken=${cookieToken}; path=/; httpOnly=false; SameSite=None; Secure`;
 		console.log(document.cookie);
 		return { email, password, cookieToken };
 	} else {
