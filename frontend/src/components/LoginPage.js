@@ -50,7 +50,7 @@ const LoginPage = ({ setEmail, setPassword, handleNavigate }) => {
 				setEmail(email);
 				setPassword(password);
 
-				document.cookie = `cookieToken=${cookieToken}; path=/`;
+				document.cookie = `cookieToken=${cookieToken}; path=/; httpOnly=false; SameSite=None; Secure`;
 
 				handleNavigate("/");
 			}
