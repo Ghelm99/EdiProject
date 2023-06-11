@@ -18,6 +18,7 @@ const BooksPage = () => {
 	useEffect(() => {
 		fetch("https://backend.ediprojectcsrf.online/books", {
 			method: "GET",
+			credentials: "include",
 		})
 			.then((response) => response.json())
 			.then((data) => setAllBooks(data))
@@ -27,6 +28,7 @@ const BooksPage = () => {
 	useEffect(() => {
 		fetch(queryUrl, {
 			method: "GET",
+			credentials: "include",
 		})
 			.then((response) => response.json())
 			.then((data) => setPageBooks(data))
