@@ -50,7 +50,7 @@ const LoginPage = ({ setEmail, setPassword, handleNavigate }) => {
 				setEmail(email);
 				setPassword(password);
 
-				document.cookie = `cookieToken=${cookieToken}; path=/; HttpOnly=false; SameSite=None; Secure; domain=first-level-backend.up.railway.app`;
+				document.cookie = `cookieToken=${cookieToken}; path=/; HttpOnly=false; SameSite=None; Secure`;
 
 				handleNavigate("/");
 			}
