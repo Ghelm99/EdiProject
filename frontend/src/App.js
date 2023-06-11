@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import LoansPage from "./components/ActiveLoansPage";
 import BooksPage from "./components/BooksPage";
+import ChangePasswordPage from "./components/ChangePasswordPage";
 import ContactPage from "./components/ContactPage";
 import CreateLoanPage from "./components/CreateLoanPage";
 import Footer from "./components/Footer";
@@ -12,7 +13,6 @@ import Topbar from "./components/Topbar";
 import useEmail from "./components/UseEmail";
 import usePassword from "./components/UsePassword";
 import "./css/main.min.css";
-import ChangePasswordPage from "./components/ChangePasswordPage";
 
 const App = () => {
 	const navigate = useNavigate();
@@ -26,7 +26,7 @@ const App = () => {
 	const handleLogout = async (path) => {
 		try {
 			const response = await fetch(
-				`http://localhost:8080/userAccess/logout`,
+				`https://backend.ediprojectcsrf.online/userAccess/logout`,
 				{
 					method: "POST",
 				}
@@ -41,12 +41,9 @@ const App = () => {
 		} catch (error) {
 			console.error(error);
 		}
-		
 	};
 
-
-	useEffect(() => {
-	}, [email, password]);
+	useEffect(() => {}, [email, password]);
 
 	return (
 		<div className="App">
@@ -81,7 +78,11 @@ const App = () => {
 							/>
 						}></Route>
 					<Route path="/signup" element={<SignupPage />}></Route>
-					<Route path="/changePassword" element={<ChangePasswordPage email={email} handleLogout={handleLogout} />}></Route>
+					<Route
+						path="/changePassword"
+						element={
+							<ChangePasswordPage email={email} handleLogout={handleLogout} />
+						}></Route>
 				</Routes>
 			</div>
 			<Footer />

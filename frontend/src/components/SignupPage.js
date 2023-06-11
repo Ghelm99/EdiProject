@@ -3,13 +3,16 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 async function signupUser(credentials) {
 	if (!(credentials.email === "") && !(credentials.password === "")) {
-		const response = await fetch("http://localhost:8080/users", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(credentials),
-		});
+		const response = await fetch(
+			"https://backend.ediprojectcsrf.online/users",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(credentials),
+			}
+		);
 
 		const data = await response.json();
 

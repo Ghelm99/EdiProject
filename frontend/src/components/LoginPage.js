@@ -3,7 +3,7 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 
 async function loginUser(credentials) {
 	const response = await fetch(
-		`http://localhost:8080/userAccess/login`,
+		`https://backend.ediprojectcsrf.online/userAccess/login`,
 		{
 			method: "POST",
 			headers: {
@@ -11,8 +11,8 @@ async function loginUser(credentials) {
 			},
 			body: JSON.stringify({
 				email: credentials.emailInput,
-				password: credentials.passwordInput
-			})
+				password: credentials.passwordInput,
+			}),
 		}
 	);
 
@@ -25,17 +25,16 @@ async function loginUser(credentials) {
 		document.cookie = `cookieToken=${cookieToken}; path=/`;
 		console.log(document.cookie);
 		return { email, password, cookieToken };
-	  } else {
+	} else {
 		// Handle login error
 		throw new Error(responseBody.error);
-	  }
+	}
 }
 
 const LoginPage = ({ setEmail, setPassword, handleNavigate }) => {
 	const [emailInput, setEmailInput] = useState("");
 	const [passwordInput, setPasswordInput] = useState("");
 	const [error, setError] = useState("");
-
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

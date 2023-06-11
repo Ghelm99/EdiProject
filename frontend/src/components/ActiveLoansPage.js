@@ -14,14 +14,16 @@ const ActiveLoansPage = () => {
 	const fetchLoansData = async () => {
 		try {
 			const response = await fetch(
-				`/loans?email=${localStorage.getItem("email")}`,
+				`https://backend.ediprojectcsrf.online/loans?email=${localStorage.getItem(
+					"email"
+				)}`,
 				{
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 						// Passing the cookie here
-						"Cookie": document.cookie
-					  }
+						Cookie: document.cookie,
+					},
 				}
 			);
 			const data = await response.json();
@@ -37,9 +39,12 @@ const ActiveLoansPage = () => {
 
 	const deleteLoan = async (loanId) => {
 		try {
-			await fetch(`/loans?loanId=${loanId}`, {
-				method: "DELETE",
-			});
+			await fetch(
+				`https://backend.ediprojectcsrf.online/loans?loanId=${loanId}`,
+				{
+					method: "DELETE",
+				}
+			);
 			await fetchLoansData();
 		} catch (error) {
 			console.error(error);

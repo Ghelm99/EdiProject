@@ -8,7 +8,9 @@ const CreateLoanPage = () => {
 	const [isLoanCreated, setIsLoanCreated] = useState(false);
 	const [pageBooks, setPageBooks] = useState([]);
 	const [allBooks, setAllBooks] = useState([]);
-	const [queryUrl, setQueryUrl] = useState("/books?page=0&size=10");
+	const [queryUrl, setQueryUrl] = useState(
+		"https://backend.ediprojectcsrf.online/books?page=0&size=10"
+	);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [recordsPerPage, setRecordsPerPage] = useState(10);
 	const [searching, setSearching] = useState(false);
@@ -18,7 +20,7 @@ const CreateLoanPage = () => {
 	const [publisher, setPublisher] = useState("");
 
 	useEffect(() => {
-		fetch("/books", {
+		fetch("https://backend.ediprojectcsrf.online/books", {
 			method: "GET",
 		})
 			.then((response) => response.json())
@@ -40,13 +42,17 @@ const CreateLoanPage = () => {
 			pageNumber = 0;
 		}
 		setCurrentPage(pageNumber);
-		setQueryUrl(`/books?page=${pageNumber}&size=${recordsPerPage}`);
+		setQueryUrl(
+			`https://backend.ediprojectcsrf.online/books?page=${pageNumber}&size=${recordsPerPage}`
+		);
 	};
 
 	const handleRecordsPerPageChange = (recordsPerPage) => {
 		setCurrentPage(0);
 		setRecordsPerPage(recordsPerPage);
-		setQueryUrl(`/books?page=${0}&size=${recordsPerPage}`);
+		setQueryUrl(
+			`https://backend.ediprojectcsrf.online/books?page=${0}&size=${recordsPerPage}`
+		);
 	};
 
 	const hasPreviousPage = () => {
@@ -71,7 +77,7 @@ const CreateLoanPage = () => {
 		const email = localStorage.getItem("email");
 		try {
 			const response = await fetch(
-				`http://localhost:8080/loans?email=${email}&bookId=${bookId}`,
+				`https://backend.ediprojectcsrf.online/loans?email=${email}&bookId=${bookId}`,
 				{
 					method: "POST",
 					credentials: "include",
@@ -176,10 +182,15 @@ const CreateLoanPage = () => {
 								onChange={(e) => {
 									setTitle(e.target.value);
 									setSearching(true);
-									setQueryUrl(`/books?title=` + e.target.value);
+									setQueryUrl(
+										`https://backend.ediprojectcsrf.online/books?title=` +
+											e.target.value
+									);
 
 									if (e.target.value === "") {
-										setQueryUrl(`/books?page=0&size=${recordsPerPage}`);
+										setQueryUrl(
+											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+										);
 										setSearching(false);
 									}
 								}}
@@ -193,10 +204,15 @@ const CreateLoanPage = () => {
 								onChange={(e) => {
 									setAuthor(e.target.value);
 									setSearching(true);
-									setQueryUrl(`/books?author=` + e.target.value);
+									setQueryUrl(
+										`https://backend.ediprojectcsrf.online/books?author=` +
+											e.target.value
+									);
 
 									if (e.target.value === "") {
-										setQueryUrl(`/books?page=0&size=${recordsPerPage}`);
+										setQueryUrl(
+											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+										);
 										setSearching(false);
 									}
 								}}
@@ -210,10 +226,15 @@ const CreateLoanPage = () => {
 								onChange={(e) => {
 									setIsbn(e.target.value);
 									setSearching(true);
-									setQueryUrl(`/books?isbn=` + e.target.value);
+									setQueryUrl(
+										`https://backend.ediprojectcsrf.online/books?isbn=` +
+											e.target.value
+									);
 
 									if (e.target.value === "") {
-										setQueryUrl(`/books?page=0&size=${recordsPerPage}`);
+										setQueryUrl(
+											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+										);
 										setSearching(false);
 									}
 								}}
@@ -227,10 +248,15 @@ const CreateLoanPage = () => {
 								onChange={(e) => {
 									setPublisher(e.target.value);
 									setSearching(true);
-									setQueryUrl(`/books?publisher=` + e.target.value);
+									setQueryUrl(
+										`https://backend.ediprojectcsrf.online/books?publisher=` +
+											e.target.value
+									);
 
 									if (e.target.value === "") {
-										setQueryUrl(`/books?page=0&size=${recordsPerPage}`);
+										setQueryUrl(
+											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+										);
 										setSearching(false);
 									}
 								}}
@@ -297,7 +323,9 @@ const CreateLoanPage = () => {
 						<Button
 							variant="primary"
 							onClick={() => {
-								setQueryUrl(`/books?page=0&size=${recordsPerPage}`);
+								setQueryUrl(
+									`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+								);
 								setSearching(false);
 								setTitle("");
 								setAuthor("");
