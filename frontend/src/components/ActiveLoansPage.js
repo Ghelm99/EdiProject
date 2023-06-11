@@ -14,7 +14,7 @@ const ActiveLoansPage = () => {
 	const fetchLoansData = async () => {
 		try {
 			const response = await fetch(
-				`https://backend.ediprojectcsrf.online/loans?email=${localStorage.getItem(
+				`https://first-level-backend.up.railway.app/loans?email=${localStorage.getItem(
 					"email"
 				)}`,
 				{
@@ -40,7 +40,7 @@ const ActiveLoansPage = () => {
 	const deleteLoan = async (loanId) => {
 		try {
 			await fetch(
-				`https://backend.ediprojectcsrf.online/loans?loanId=${loanId}`,
+				`https://first-level-backend.up.railway.app/loans?loanId=${loanId}`,
 				{
 					method: "DELETE",
 				}

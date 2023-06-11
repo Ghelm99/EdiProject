@@ -26,7 +26,7 @@ const App = () => {
 	const handleLogout = async (path) => {
 		try {
 			const response = await fetch(
-				`https://backend.ediprojectcsrf.online/userAccess/logout`,
+				`https://first-level-backend.up.railway.app/userAccess/logout`,
 				{
 					method: "POST",
 				}

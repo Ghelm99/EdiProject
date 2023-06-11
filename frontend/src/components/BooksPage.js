@@ -5,7 +5,7 @@ const BooksPage = () => {
 	const [pageBooks, setPageBooks] = useState([]);
 	const [allBooks, setAllBooks] = useState([]);
 	const [queryUrl, setQueryUrl] = useState(
-		"https://backend.ediprojectcsrf.online/books?page=0&size=10"
+		"https://first-level-backend.up.railway.app/books?page=0&size=10"
 	);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [recordsPerPage, setRecordsPerPage] = useState(10);
@@ -16,7 +16,7 @@ const BooksPage = () => {
 	const [publisher, setPublisher] = useState("");
 
 	useEffect(() => {
-		fetch("https://backend.ediprojectcsrf.online/books", {
+		fetch("https://first-level-backend.up.railway.app/books", {
 			method: "GET",
 		})
 			.then((response) => response.json())
@@ -39,7 +39,7 @@ const BooksPage = () => {
 		}
 		setCurrentPage(pageNumber);
 		setQueryUrl(
-			`https://backend.ediprojectcsrf.online/books?page=${pageNumber}&size=${recordsPerPage}`
+			`https://first-level-backend.up.railway.app/books?page=${pageNumber}&size=${recordsPerPage}`
 		);
 	};
 
@@ -47,7 +47,7 @@ const BooksPage = () => {
 		setCurrentPage(0);
 		setRecordsPerPage(recordsPerPage);
 		setQueryUrl(
-			`https://backend.ediprojectcsrf.online/books?page=${0}&size=${recordsPerPage}`
+			`https://first-level-backend.up.railway.app/books?page=${0}&size=${recordsPerPage}`
 		);
 	};
 
@@ -79,13 +79,13 @@ const BooksPage = () => {
 									setTitle(e.target.value);
 									setSearching(true);
 									setQueryUrl(
-										`https://backend.ediprojectcsrf.online/books?title=` +
+										`https://first-level-backend.up.railway.app/books?title=` +
 											e.target.value
 									);
 
 									if (e.target.value === "") {
 										setQueryUrl(
-											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+											`https://first-level-backend.up.railway.app/books?page=0&size=${recordsPerPage}`
 										);
 										setSearching(false);
 									}
@@ -101,13 +101,13 @@ const BooksPage = () => {
 									setAuthor(e.target.value);
 									setSearching(true);
 									setQueryUrl(
-										`https://backend.ediprojectcsrf.online/books?author=` +
+										`https://first-level-backend.up.railway.app/books?author=` +
 											e.target.value
 									);
 
 									if (e.target.value === "") {
 										setQueryUrl(
-											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+											`https://first-level-backend.up.railway.app/books?page=0&size=${recordsPerPage}`
 										);
 										setSearching(false);
 									}
@@ -123,13 +123,13 @@ const BooksPage = () => {
 									setIsbn(e.target.value);
 									setSearching(true);
 									setQueryUrl(
-										`https://backend.ediprojectcsrf.online/books?isbn=` +
+										`https://first-level-backend.up.railway.app/books?isbn=` +
 											e.target.value
 									);
 
 									if (e.target.value === "") {
 										setQueryUrl(
-											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+											`https://first-level-backend.up.railway.app/books?page=0&size=${recordsPerPage}`
 										);
 										setSearching(false);
 									}
@@ -145,13 +145,13 @@ const BooksPage = () => {
 									setPublisher(e.target.value);
 									setSearching(true);
 									setQueryUrl(
-										`https://backend.ediprojectcsrf.online/books?publisher=` +
+										`https://first-level-backend.up.railway.app/books?publisher=` +
 											e.target.value
 									);
 
 									if (e.target.value === "") {
 										setQueryUrl(
-											`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+											`https://first-level-backend.up.railway.app/books?page=0&size=${recordsPerPage}`
 										);
 										setSearching(false);
 									}
@@ -210,7 +210,7 @@ const BooksPage = () => {
 							variant="primary"
 							onClick={() => {
 								setQueryUrl(
-									`https://backend.ediprojectcsrf.online/books?page=0&size=${recordsPerPage}`
+									`https://first-level-backend.up.railway.app/books?page=0&size=${recordsPerPage}`
 								);
 								setSearching(false);
 								setTitle("");

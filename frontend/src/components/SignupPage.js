@@ -4,7 +4,7 @@ import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 async function signupUser(credentials) {
 	if (!(credentials.email === "") && !(credentials.password === "")) {
 		const response = await fetch(
-			"https://backend.ediprojectcsrf.online/users",
+			"https://first-level-backend.up.railway.app/users",
 			{
 				method: "POST",
 				headers: {

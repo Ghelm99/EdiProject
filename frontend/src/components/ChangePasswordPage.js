@@ -16,7 +16,7 @@ const ChangePasswordPage = ({ email, handleLogout }) => {
 
 		try {
 			const response = await fetch(
-				`https://backend.ediprojectcsrf.online/users?email=${email}&password=${password}&newPassword=${newPassword}`,
+				`https://first-level-backend.up.railway.app/users?email=${email}&password=${password}&newPassword=${newPassword}`,
 				{
 					method: "PUT",
 				}
