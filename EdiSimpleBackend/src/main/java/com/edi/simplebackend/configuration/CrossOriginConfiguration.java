@@ -15,7 +15,7 @@ public class CrossOriginConfiguration {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOriginPatterns("*")
+						.allowedOriginPatterns("https://64861e0d2c003b4038beaa01--splendid-bublanina-92bdae.netlify.app")
 						.allowedMethods("*")
 						.allowedHeaders("*")
 						.allowCredentials(true)
