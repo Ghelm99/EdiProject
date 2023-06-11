@@ -23,7 +23,7 @@ async function loginUser(credentials) {
 		// Handle successful login
 		const { email, password, cookieToken } = responseBody;
 		// Store the received cookie token
-		document.cookie = `cookieToken=${cookieToken}; path=/; httpOnly=false; SameSite=None; Secure`;
+		document.cookie = `cookieToken=${cookieToken}; path=/; SameSite=None; Secure`;
 		console.log(document.cookie);
 		return { email, password, cookieToken };
 	} else {
