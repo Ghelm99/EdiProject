@@ -15,7 +15,7 @@ public class CrossOriginConfiguration {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOriginPatterns("*")
+						.allowedOriginPatterns("https://*")
 						.allowedMethods("*")
 						.allowedHeaders("*")
 						.maxAge(3600);
